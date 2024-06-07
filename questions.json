@@ -1,0 +1,200 @@
+{
+  "demographic": {
+    "options": ["High School/University Student", "User", "Retiree", "Adults"]
+  },
+  "categories": [
+    {
+      "demographic": "High School/University Student",
+      "questions": [
+        {
+          "question": "How much is your monthly income? (Part-time/Full-time work, Investments)",
+          "name": "income",
+          "placeholder": "Enter your monthly income (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your monthly allowance?",
+          "name": "allowance",
+          "placeholder": "Enter your monthly allowance (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much do you spend each month?",
+          "name": "monthlyExpenses",
+          "placeholder": "Enter your monthly spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your fixed monthly expenses? (Dorm rental, Tuition fee, Subscriptions)",
+          "name": "fixedExpenses",
+          "placeholder": "Enter your fixed monthly expenses (RM)",
+          "type": "number"
+        },
+        {
+          "question": "What do you spend most on monthly?",
+          "name": "biggestSpend",
+          "type": "select",
+          "options": ["Shopping", "Food", "Hobbies"],
+          "followUp": {
+            "key": "Hobbies",
+            "name": "biggestSpend",
+            "question": "What interest do you spend most on?",
+            "options": [
+              "Karaoke",
+              "Going to the movies",
+              "Cafe hopping",
+              "Games (Board game, Card game, Computer games)",
+              "Sports",
+              "Other hobbies"
+            ],
+            "type": "select"
+          }
+        },
+        {
+          "question": "How much do you usually spend on your biggest spending?",
+          "name": "biggestSpendAmount",
+          "placeholder": "Enter your biggest spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "Are you living with your parents/guardian or alone?",
+          "name": "livingStatus",
+          "type": "text"
+        },
+        {
+          "question": "How much do you plan on saving each month?",
+          "name": "saveAmount",
+          "placeholder": "Enter your saving amount (RM)",
+          "type": "number"
+        },
+        {
+          "question": "What is your household income group?",
+          "name": "householdIncomeGroup",
+          "type": "select",
+          "options": ["B40", "M40", "T20"]
+        }
+      ]
+    },
+    {
+      "demographic": "User",
+      "questions": [
+        {
+          "question": "I'm a High School/University Student with a monthly income/allowance of ${income/allowance}. Every month I spend around ${total_expenditure}. I usually spend ${biggest_spend_amount} on my ${biggest_spend}. I also have ${investment?} investments.",
+          "input_type": "text"
+        }
+      ]
+    },
+    {
+      "demographic": "Retiree",
+      "questions": [
+        {
+          "question": "Do you have any source of income/allowance (investment, from children)?",
+          "options": ["Yes", "No"],
+          "follow_up_question": {
+            "question": "How much?",
+            "input_type": "range"
+          }
+        },
+        {
+          "question": "How much do you have left in your EPF?",
+          "input_type": "range"
+        },
+        {
+          "question": "What do you spend most on monthly?",
+          "options": [
+            "Healthcare",
+            "Food",
+            "Transportation",
+            "Housing",
+            "Shopping",
+            "Others (specify)"
+          ],
+          "follow_up_question": {
+            "question": "How much do you usually spend on (answer of 2a)?",
+            "input_type": "text"
+          }
+        },
+        {
+          "question": "Are you saving to travel?",
+          "input_type": "text"
+        },
+        {
+          "question": "How much do you plan to save each month?",
+          "input_type": "number"
+        }
+      ]
+    },
+    {
+      "demographic": "Adults",
+      "questions": [
+        {
+          "question": "What is your employment status?",
+          "options": ["Self-Employed", "Employed", "Unemployed"],
+          "follow_up_question": {
+            "question": "What industry are you working in?",
+            "options": ["Health", "Education", "IT & Engineering", "Law"],
+            "input_type": "text"
+          }
+        },
+        {
+          "question": "Do you have a stable income?",
+          "options": ["Yes", "No"],
+          "follow_up_question": {
+            "question": "How much is your income range (Ringgit Malaysia)?",
+            "options": [
+              "1000 - 2500",
+              "2501 - 4000",
+              "4001 - 5500",
+              "5501 - 7000",
+              "7000 above"
+            ],
+            "input_type": "text"
+          }
+        },
+        {
+          "question": "Estimate how much you spend monthly on necessity (bills, family expenses, monthly insurance)?",
+          "options": ["0 - 500", "501 - 1000", "1001 - 3000", "3000 above"],
+          "input_type": "text"
+        },
+        {
+          "question": "What do you spend most on?",
+          "options": [
+            "Food",
+            "Education",
+            "Entertainment",
+            "Subscriptions",
+            "Transportation",
+            "Healthcare",
+            "Utilities",
+            "Others"
+          ],
+          "follow_up_question": {
+            "question": "Do you spend a lot on your hobby/interest?",
+            "options": ["Yes", "No"],
+            "input_type": "text"
+          }
+        },
+        {
+          "question": "Are you saving to travel?",
+          "input_type": "text"
+        },
+        {
+          "question": "How much do you plan to save each month?",
+          "input_type": "number"
+        },
+        {
+          "question": "Do you have any loans?",
+          "options": ["Yes", "No"],
+          "follow_up_question": {
+            "question": "How many more months till you pay off your loans?",
+            "input_type": "text"
+          }
+        },
+        {
+          "question": "How much do you own in investments?",
+          "input_type": "number"
+        }
+      ]
+    }
+  ]
+}
