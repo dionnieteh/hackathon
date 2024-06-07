@@ -37,7 +37,7 @@
           "options": ["Shopping", "Food", "Hobbies"],
           "followUp": {
             "key": "Hobbies",
-            "name": "biggestSpend",
+            "name": "biggestSpendHobby",
             "question": "What interest do you spend most on?",
             "options": [
               "Karaoke",
@@ -72,15 +72,6 @@
           "name": "householdIncomeGroup",
           "type": "select",
           "options": ["B40", "M40", "T20"]
-        }
-      ]
-    },
-    {
-      "demographic": "User",
-      "questions": [
-        {
-          "question": "I'm a High School/University Student with a monthly income/allowance of ${income/allowance}. Every month I spend around ${total_expenditure}. I usually spend ${biggest_spend_amount} on my ${biggest_spend}. I also have ${investment?} investments.",
-          "input_type": "text"
         }
       ]
     },

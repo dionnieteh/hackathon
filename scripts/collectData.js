@@ -57,12 +57,12 @@ function generateQuestions(response) {
         }
         financialForm.innerHTML += html;
         if(question.followUp) {
-          generateFollowUpQuestion(question.followUp, financialForm);
+          generateFollowUpQuestion(question, financialForm);
         }
       });
     }
   });
-  financialForm.innerHTML += `<button type="submit" class="btn btn-primary mt-2">Submit</button>`;
+  financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2" onclick="submitFinancial()">Submit</button>`;
 }
 
 function generateNumberQuestion(question) {
@@ -101,14 +101,14 @@ function generateTextQuestion(question) {
 }
 
 function generateFollowUpQuestion(question, financialForm) {
-  let containerID = question.name + "Container";
+  let containerID = question.followUp.name + "Container";
   let html = `<div id="${containerID}" style="display:none">`;
-  switch (question.type) {
+  switch (question.followUp.type) {
     case "text":
-      html += generateTextQuestion(question);
+      html += generateTextQuestion(question.followUp);
       break;
     case "select":
-      html += generateSelectQuestion(question);
+      html += generateSelectQuestion(question.followUp);
       break;
   }
   html += `</div>`;
@@ -120,10 +120,10 @@ function generateFollowUpQuestion(question, financialForm) {
       if (mutation.type === 'childList') {
         let inputElement = document.getElementById(question.name);
         if (inputElement) {
-          console.log(inputElement);
+          console.log(inputElement) ;
           let container = document.getElementById(containerID);
           inputElement.addEventListener("input", function() {
-            if (inputElement.value === question.key) {
+            if (inputElement.value === question.followUp.key) {
               container.style.display = "block"; 
             } else {
               container.style.display = "none";
@@ -139,4 +139,30 @@ function generateFollowUpQuestion(question, financialForm) {
 
   const observer = new MutationObserver(callback);
   observer.observe(financialForm, { childList: true, subtree: true });
+}
+
+function submitFinancial(){
+  getFinancialData();
+}
+
+function getFinancialData(){
+  let financialData = {};
+  questionData.categories.forEach((category) => {
+    if (category.demographic === response.demographic) {
+      category.questions.forEach((question) => {
+
+        let inputElement = document.getElementById(question.name);
+        if(question.followUp) {
+          inputElement = document.getElementById(question.followUp.name);
+        }else{
+          inputElement = document.getElementById(question.name);
+        }
+        
+        if (inputElement) {
+          financialData[question.name] = inputElement.value;
+        }
+      });
+    }
+  });
+  console.log(financialData);
 }
