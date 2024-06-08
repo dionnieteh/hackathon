@@ -34,7 +34,7 @@ function submitDemographic() {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
-  // console.log(response);
+  console.log("User Demographic: ", response);
   generateQuestions(response);
 }
 
@@ -52,6 +52,9 @@ function generateQuestions(response) {
             break;
           case "select":
             html = generateSelectQuestion(question);
+            break;
+          case "radio":
+            html = generateRadioQuestion(question);
             break;
         }
         financialForm.innerHTML += html;
@@ -87,6 +90,28 @@ function generateSelectQuestion(question) {
     </select>
   </div>
   `;
+  return html;
+}
+
+function generateRadioQuestion(question) {
+  let html = `
+  <div class="form-group my-3">
+    <label for="${question.name}" class="form-label">${question.question}</label>
+    `;
+  let count = 1;
+  question.options.forEach((option) => {
+    id = question.name + count;
+    html += `
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="${question.name}" value="${option}" id="${id}">
+        <label class="form-check-label" for="${id}">
+          ${option}
+        </label>
+      </div>
+    `;
+    count++;
+  });
+  html += `</div>`;
   return html;
 }
 
@@ -153,10 +178,22 @@ function getFinancialData() {
     if (category.demographic === response.demographic) {
       category.questions.forEach((question) => {
         let inputElement = document.getElementById(question.name);
+
+        // Update with follow up value
         if (question.followUp) {
           inputElement = document.getElementById(question.followUp.name);
         } else {
           inputElement = document.getElementById(question.name);
+        }
+
+        // Get selected radio button
+        if(question.type === "radio") {
+          let radioButtons = document.getElementsByName(question.name);
+          radioButtons.forEach((radioButton) => {
+            if(radioButton.checked) {
+              financialData[question.name] = radioButton.value;
+            }
+          });
         }
 
         if (inputElement) {
@@ -190,6 +227,7 @@ function fetchPrompt() {
 function classifyPrompt(promptData) {
   // Get user input
   let financialData = getFinancialData();
+  console.log("Financial Data: ", financialData);
   let finalPrompt = "";
 
   // Filter prompts based on demographic
@@ -198,18 +236,30 @@ function classifyPrompt(promptData) {
       // console.log(category);
       category.prompts.forEach((prompt) => {
         let promptText = "";
-        let value = "";
+        let value = ""; // To store user dynamic input
+
+        // More than two properties being compared in if-statement
         if (prompt.type) {
+          let condition = financialData[prompt.condition];
+          let value = prompt.conditionValue;
+
           switch (prompt.type) {
             case "greater":
-              let condition = financialData[prompt.condition];
-              if (condition > prompt.conditionValue) {
+              if (condition > value) {
                 promptText = prompt.trueText;
               } else {
                 promptText = prompt.falseText;
               }
               break;
-            case "select":
+            case "equal":
+              if (condition === value) {
+                promptText = prompt.trueText;
+              } else {
+                promptText = prompt.falseText;
+              }
+              break;
+            case "multiple":
+              promptText = prompt.text;
               break;
           }
 
@@ -219,7 +269,6 @@ function classifyPrompt(promptData) {
               promptText = promptText.replace(`{${name}}`, value);
             }
           });
-
         } else {
           promptText = prompt.text;
           value = financialData[prompt.name];

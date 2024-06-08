@@ -2,7 +2,6 @@
   "demographic": {
     "options": [
       "High School/University Student",
-      "User",
       "Retiree",
       "Adults"
     ]
@@ -30,7 +29,7 @@
           "type": "number"
         },
         {
-          "question": "How much is your fixed monthly expenses? (dorm rental, tuition fee, subscriptions)",
+          "question": "How much is your fixed monthly expenses? (Dorm rental, Tuition fee, Subscriptions)",
           "name": "fixedExpenses",
           "placeholder": "Enter your fixed monthly expenses (RM)",
           "type": "number"
@@ -60,7 +59,7 @@
           }
         },
         {
-          "question": "How much do you usually spend on your biggest spending?",
+          "question": "How much do you usually spend on the chosen activity?",
           "name": "biggestSpendAmount",
           "placeholder": "Enter your biggest spending (RM)",
           "type": "number"
@@ -72,7 +71,7 @@
             "Yes",
             "No"
           ],
-          "type": "select"
+          "type": "radio"
         },
         {
           "question": "How much do you plan on saving each month?",
