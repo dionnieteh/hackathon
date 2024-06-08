@@ -62,11 +62,20 @@ function submitDemographic() {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
+
+  
+  // document.getElementById('container').classList.add('container-hidden');
+  // console.log("User Demographic: ", response);
+  // setTimeout(function() {
+  // generateQuestions(response);
+  // }, 560); 
+
   console.log("User Demographic: ", financialData);
 
   let demographicForm = document.getElementById("demographicForm");
   demographicForm.style.display = "none";
   generateQuestions();
+
 }
 
 
