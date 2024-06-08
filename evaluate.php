@@ -14,10 +14,10 @@
 </head>
 
   <header>
-    <img src="logo.png" class="header-logo" alt="App Logo">
+    <img src="./images/logo.png" class="header-logo" alt="App Logo">
   </header>
     
-  <body style="background-image:  linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('bg.png'); background-size: cover; background-position: center center;">
+  <body style="background-image:  linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('./images/bg.png'); background-size: cover; background-position: center center; min-width:100vh; min-height:100vh;">
 
   <div class="container centered-container mt-5" id="container">
   <div class="form-container">
