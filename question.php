@@ -20,7 +20,6 @@
         .card {
             transition: transform 0.3s ease;
         }
-
         .card:hover {
             transform: scale(1.05);
             cursor: pointer;
@@ -65,6 +64,16 @@
                 <div class="progress" style="background-color: #EDE8E3; width: 100%; height: 35px; border-radius: 10px;">
                     <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
                 </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row m-5">
+        <div class="col-md-12 d-flex align-items-center">
+            <div class="progress" style="background-color: #EDE8E3; width: 100%; height: 35px; border-radius: 10px;">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
             </div>
         </div>
     </div>

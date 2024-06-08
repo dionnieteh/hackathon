@@ -2,6 +2,7 @@
   "demographic": {
     "options": [
       "High School/University Student",
+      "User",
       "Retiree",
       "Adults"
     ]
@@ -29,7 +30,7 @@
           "type": "number"
         },
         {
-          "question": "How much is your fixed monthly expenses? (Dorm rental, Tuition fee, Subscriptions)",
+          "question": "How much is your fixed monthly expenses? (dorm rental, tuition fee, subscriptions)",
           "name": "fixedExpenses",
           "placeholder": "Enter your fixed monthly expenses (RM)",
           "type": "number"
@@ -59,7 +60,7 @@
           }
         },
         {
-          "question": "How much do you usually spend on the chosen activity?",
+          "question": "How much do you usually spend on your biggest spending?",
           "name": "biggestSpendAmount",
           "placeholder": "Enter your biggest spending (RM)",
           "type": "number"
@@ -71,7 +72,7 @@
             "Yes",
             "No"
           ],
-          "type": "radio"
+          "type": "select"
         },
         {
           "question": "How much do you plan on saving each month?",
@@ -90,9 +91,9 @@
           "name": "householdIncomeGroup",
           "type": "select",
           "options": [
-            "B40 (RM5,250 and less)",
-            "M40 (Between RM5,251 and RM11,819)",
-            "T20 (RM11,820 or more)"
+            "B40",
+            "M40",
+            "T20"
           ]
         }
       ]

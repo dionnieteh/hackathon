@@ -66,7 +66,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-md-12 mt-3">
+            <div class="col-md-6 mt-3">
                 <div class="card" style="width: 100%;">
                     <div class="card-body" style="text-align: center">
                         <h5 class="card-title">Answer</h5>
@@ -75,17 +75,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mt-3">
-                <div class="card" style="width: 100%;">
-                    <div class="card-body" style="text-align: center">
-                        <h5 class="card-title">Answer</h5>
-                        <p class="card-text">Description of your answer</p>
-                        <input type="hidden" name="" value="">
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12 mt-3">
+            <div class="col-md-6 mt-3">
                 <div class="card" style="width: 100%;">
                     <div class="card-body" style="text-align: center">
                         <h5 class="card-title">Answer</h5>
@@ -95,7 +85,37 @@
                 </div>
             </div>
 
-            <div class="col-md-12 mt-3">
+            <div class="col-md-6 mt-3">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body" style="text-align: center">
+                        <h5 class="card-title">Answer</h5>
+                        <p class="card-text">Description of your answer</p>
+                        <input type="hidden" name="" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-66 mt-3">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body" style="text-align: center">
+                        <h5 class="card-title">Answer</h5>
+                        <p class="card-text">Description of your answer</p>
+                        <input type="hidden" name="" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-66 mt-3">
+                <div class="card" style="width: 100%;">
+                    <div class="card-body" style="text-align: center">
+                        <h5 class="card-title">Answer</h5>
+                        <p class="card-text">Description of your answer</p>
+                        <input type="hidden" name="" value="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-66 mt-3">
                 <div class="card" style="width: 100%;">
                     <div class="card-body" style="text-align: center">
                         <h5 class="card-title">Answer</h5>

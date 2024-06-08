@@ -17,68 +17,100 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+</head>
 
-<body style="background-color: #EBEBEB">
+<body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">
+
+    <nav class="navbar navbar-expand-lg navbar-light p-3 m-3">
+        <a class="navbar-brand" href="#" style="color: #50B359; font-weight: bold;">
             <img src="" width="30" height="30" class="d-inline-block align-top" alt="">
             Site name
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav ml-auto">
+        <div class="navbar-expand  ml-auto" id="navbarText;">
+            <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Page <span class="sr-only">(current)</span></a>
+                    <a class="nav-link mx-2" href="#"
+                        style="padding:10px; width: 85px; background-color: #50B359; border-radius: 10px; text-align: center; color: white;">Page
+                        <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <a class="nav-link" href="#">Page</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mx-2">
                     <a class="nav-link" href="#">Page</a>
                 </li>
             </ul>
         </div>
     </nav>
 
-
-    <div class="row">
-        <div class="col-md-12 ml-4 mt-4">
-            <h1>Results</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 ml-4 mt-4">
+                <h1 style="color: #70A8C2">Results</h1>
+            </div>
+            <div class="col-md-12 ml-4">Hey there! It's great that you're thinking about your finances. Let's break down your spending and see what we can do.</div>
         </div>
-        <div class="col-md-12 ml-4">Hey there! It's great that you're thinking about your finances. Let's break down
-            your spending and see what we can do.</div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+                <h6 style="color: #50B359;" class="m-4">Spending Analysis</h6>
+            </div>
+        
+            <div class="col-md-6 mt-2">
+                <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+            </div>
+        
+            <div class="col-3 d-flex flex-column float-left justify-content-center mt-5">
+                <div class="mb-2">Hobbies</div>
+                <div class="mb-2">Clothing</div>
+                Food
+            </div>
+            
+            <div class="col-3 d-flex flex-column align-items-center justify-content-center mt-5" style="font-weight: bold;">
+                <div class="mb-2">25%</div>
+                <div class="mb-2">25%</div>
+                50%
+            </div>
+
+            <div class="col-md-12">
+                <h6 style="color: #50B359;" class="m-4">Financial Analysis</h6>
+            </div>
+
+            <div class="col-md-12">
+                <div class="card" style="width: 100%; color: white; background-color: #70A8C2; border: none; border-radius: 15px;">
+                    <div class="card-body">
+                        <p class="card-text">It's awesome that you're already tracking your spending. That's a big step towards financial literacy. However, since you're still in school and don't have an income, we need to focus on managing your expenses wisely.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <h6 style="color: #50B359;" class="m-4">Personalized Advice</h6>
+                <p style="white-space: pre-wrap;" class="m-4">Here are a few tips tailored just for you:
+
+The "Want" vs. "Need" Game: Think of your arcade trips as "wants". While fun, they're not essential like food or school supplies (those are "needs"). Challenge yourself to cut back on arcade visits to once a week or set a lower budget, say RM50, and see if you can stick to it.
+
+The Power of Saving: Even with a small amount, saving is magical! Let's say you save RM50 from your entertainment money each month. In just 6 months, you could buy something really cool you've been wanting.
+
+Talk to the Money Master: Your parents or guardians are your own personal financial superheroes! Talk to them about your spending and saving goals. They can offer guidance and maybe even match your savings – how cool is that?</p>
+            </div>
+        
+            <div class="col-md-12">
+                <h6 style="color: #50B359;" class="m-4">Level Up Your Financial Literacy</h6>
+                <p style="white-space: pre-wrap;" class="m-4">Track Your Spending: Keep a small notebook or use a mobile app to jot down everything you spend for a month. You'll be surprised where your money goes!</p>
+            </div>
+
+            <div class="col-md-12 mb-3" style="text-align: center;">
+                <button type="submit" class="btn mt-3" style="width: 20%; padding: 10px; background-color: #50B359; color: white; border-radius: 15px;">Done</button>
+            </div>
+    
+    
+        </div>
+
+
     </div>
-
-    <div class="row">
-    <div class="col-md-1 mt-5"></div>
-    <div class="col-md-6 mt-5">
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-    </div>
-    <div class="col-md-2 d-flex flex-column float-left justify-content-center mt-5">
-    <div class="mb-2">Hobbies</div>
-    <div class="mb-2">Clothing</div>
-    Food
-    </div>
-    <div class="col-md-1 d-flex flex-column align-items-center justify-content-center mt-5">
-    <div class="mb-2">25%</div>
-    <div class="mb-2">25%</div>
-    50%
-    </div>
-    <div class="col-md-1 mt-5"></div>
-</div>
-
-
-
-
-
-
-
-
-
 
 </body>
 
