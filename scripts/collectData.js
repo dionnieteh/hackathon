@@ -280,13 +280,26 @@ function handleNext(part, isFinal) {
 
 function generateNumberQuestion(sections, question) {
   return `
-
   <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
     <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
-    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
+    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}" onkeydown="return blockInvalidChars(event)">
   </div>
   `;
 }
+
+function blockInvalidChars(event) {
+  const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
+  const key = event.key;
+
+  // Allow allowed keys
+  if (allowedKeys.includes(key)) {
+    return true;
+  }
+
+  // Block other keys
+  return false;
+}
+
 
 function generateSelectQuestion(sections, question) {
   let html = `
