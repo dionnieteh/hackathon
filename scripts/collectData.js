@@ -69,9 +69,38 @@ function generateQuestions(response) {
 }
 
 function generateQuestionsBasedOnSection(sections, seq) {
+  let containerColor = "";
+  switch (seq) {
+    case "Assets":
+      containerColor = "#E7F4F9";
+      break;
+    case "Financial Dependency":
+      containerColor = "#E7F4F9"; 
+      break;
+    case "Expenditure":
+      containerColor = "#E7F4F9";
+      break;
+    case "Biggest Expenditure":
+      containerColor = "#E7F4F9";
+      break;
+    case "Savings":
+      containerColor = "#E7F4F9"; 
+      break;
+    case "Household":
+      containerColor = "#E7F4F9"; 
+      break;
+    default:
+      containerColor = "#E7F4F9";
+      break;
+  }
+
+  let containerHTML = `
+    <div class="container my-3 py-3" style="background-color: ${containerColor};">
+  `;
+
   questionData.categories.forEach((category) => {
     if (category.questionCategory == seq) {
-      console.log(category.questions)
+      console.log(category.questions);
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
@@ -85,21 +114,26 @@ function generateQuestionsBasedOnSection(sections, seq) {
             html = generateRadioQuestion(sections, question);
             break;
         }
-        financialForm.innerHTML += html;
+        containerHTML += html;
         if (question.followUp) {
-          generateFollowUpQuestion(sections, question, financialForm);
+          generateFollowUpQuestion(sections, question, containerHTML);
         }
-      }
-      );
+      });
     }
   });
+
+  containerHTML += `</div>`;
+
+  financialForm.innerHTML += containerHTML;
+
   if (seq == "Household") {
     financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();submitFinancial();" visibility="visible">Submit</button>`;
   } else {
-      console.log("Sections: ", sections, seq.length  );
-      financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();generateQuestions(response);submitFinancial();" visibility="visible">Next</button>`;
+    console.log("Sections: ", sections, seq.length);
+    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();generateQuestions(response);submitFinancial();" visibility="visible">Next</button>`;
   }
 }
+
 
 function updateSection(sections) {
   return ++sections;
