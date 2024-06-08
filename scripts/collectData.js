@@ -280,39 +280,18 @@ function handleNext(part, isFinal) {
 
 function generateNumberQuestion(sections, question) {
   return `
+
   <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
     <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
-    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}" onkeydown="return blockInvalidChars(event)">
+    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
   `;
-}
-
-function generateNumberQuestion(sections, question) {
-  return `
-  <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
-    <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
-    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}" oninput="validateNumberInput(event)">
-  </div>
-  `;
-}
-
-function validateNumberInput(event) {
-  const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
-  const inputChar = event.data;
-  
-  // If input is null (e.g., delete or backspace), allow it
-  if (!inputChar) return;
-
-  // If input is not in allowedChars, prevent input
-  if (!allowedChars.includes(inputChar)) {
-    event.preventDefault();
-  }
 }
 
 function generateSelectQuestion(sections, question) {
   let html = `
   <div class="form-group mt-4 section-${sections}">
-    <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
+    <label for="${question.name}" class="form-label">${question.question}</label>
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
   `;
@@ -416,6 +395,36 @@ async function submitFinancial() {
   </div>
   `;
 
+  // Generate the HTML code for the chart
+  var chartHTML = `<script>
+var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
+var yValues = [55, 49, 44, 24, 15];
+var barColors = [
+  "#b91d47",
+  "#00aba9",
+  "#2b5797",
+  "#e8c3b9",
+  "#1e7145"
+];
+
+new Chart("financialChart", {
+  type: "pie",
+  data: {
+    labels: xValues,
+    datasets: [{
+      backgroundColor: barColors,
+      data: yValues
+    }]
+  },
+  options: {
+    title: {
+      display: true,
+      text: "World Wide Wine Production 2018"
+    }
+  }
+});
+  </script>`;
+
   fetch("response.php", {
     method: "POST",
     headers: {
@@ -424,12 +433,14 @@ async function submitFinancial() {
     body: JSON.stringify({
       userText: finalPrompt,
       modelText: modelRole,
+      chartHTML: chartHTML
     }),
   })
   .then((res) => res.text())
   .then((res) => {
     res = res.replace(/```html/g, "").replace(/```/g, "");
-    response.innerHTML = res;
+    // Append the received chart HTML to the response element
+    response.innerHTML = res + chartHTML;
   });
 }
 

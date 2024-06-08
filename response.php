@@ -1,4 +1,7 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+
 <?php
+
 require "vendor/autoload.php";
 require __DIR__ . '/vendor/autoload.php';
 
@@ -41,6 +44,7 @@ Output Format & Structure:
 - The key phrases/points must be enclosed with <b> tags
 - The content of each section must be enclosed with <p> tags.
 - Each section should end with a <br> tag.  `
+- You must add this line of code after the Spending Analysis tag: <canvas id='financialChart' width='400' height='400'></canvas>
 
 Do's & Don'ts: 
 - Do not assume any user's spending that is not stated.
@@ -63,6 +67,7 @@ Sample Output:
 <p>Hi {name}, {elaboration based on user's spending behaviour or goal}.</p>
 
 <h3>Spending Analysis</h3>
+<canvas id='financialChart' style='width: 400; height: 400'></canvas>
 <p>Your total monthly expenses come up  to RM{totalExpenses}...</p>
 
 <h3>Financial Literacy Check</h3>
