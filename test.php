@@ -13,9 +13,11 @@
   <script src="./scripts/collectData.js"></script>
 </head>
 
-
+  <header>
+    <img src="logo.png" class="header-logo" alt="App Logo">
+  </header>
     
-  <div class="container centered-container">
+  <div class="container centered-container mt-5">
   <div class="form-container">
     <form id="demographicForm" method="POST">
   <br>
@@ -35,10 +37,6 @@
   </div>
   </div>
   
-
-
-
-
   <br><br>
   <form id="financialForm" method="POST" style="visibility:hidden;">
     <h2>Financial Analysis</h2>
@@ -48,9 +46,7 @@
   <div id="response">
   </div>
 
-  <footer>
-        <img src="logo.png" class="footer-logo" alt="App Logo">
-    </footer>
+
 
 </body>
 
