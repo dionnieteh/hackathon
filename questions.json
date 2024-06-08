@@ -40,7 +40,7 @@
           "type": "number"
         },
         {
-          "question": "How much is your fixed monthly expenses? (dorm rental, tuition fee, subscriptions)",
+          "question": "How much is your fixed monthly expenses? (Dorm rental, Tuition fee, Subscriptions)",
           "name": "fixedExpenses",
           "placeholder": "Enter your fixed monthly expenses (RM)",
           "type": "number"
