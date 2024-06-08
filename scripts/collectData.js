@@ -180,17 +180,17 @@ function getFinancialData() {
         let inputElement = document.getElementById(question.name);
 
         // Update with follow up value
-        if (question.followUp) {
+        if (question.followUp && inputElement.value === question.followUp.key) {
           inputElement = document.getElementById(question.followUp.name);
         } else {
           inputElement = document.getElementById(question.name);
         }
 
         // Get selected radio button
-        if(question.type === "radio") {
+        if (question.type === "radio") {
           let radioButtons = document.getElementsByName(question.name);
           radioButtons.forEach((radioButton) => {
-            if(radioButton.checked) {
+            if (radioButton.checked) {
               financialData[question.name] = radioButton.value;
             }
           });
@@ -236,48 +236,39 @@ function classifyPrompt(promptData) {
       // console.log(category);
       category.prompts.forEach((prompt) => {
         let promptText = "";
-        let value = ""; // To store user dynamic input
 
-        // More than two properties being compared in if-statement
-        if (prompt.type) {
-          let condition = financialData[prompt.condition];
-          let value = prompt.conditionValue;
+        // Identify type of condition to process
 
-          switch (prompt.type) {
-            case "greater":
-              if (condition > value) {
-                promptText = prompt.trueText;
-              } else {
-                promptText = prompt.falseText;
-              }
-              break;
-            case "equal":
-              if (condition === value) {
-                promptText = prompt.trueText;
-              } else {
-                promptText = prompt.falseText;
-              }
-              break;
-            case "multiple":
-              promptText = prompt.text;
-              break;
-          }
+        let condition = financialData[prompt.condition];
+        let value = prompt.conditionValue; // To store user dynamic input
 
-          prompt.names.forEach((name) => {
-            value = financialData[name];
-            if (promptText) {
-              promptText = promptText.replace(`{${name}}`, value);
+        switch (prompt.type) {
+          case "greater":
+            if (condition > value) {
+              promptText = prompt.trueText;
+            } else {
+              promptText = prompt.falseText;
             }
-          });
-        } else {
-          promptText = prompt.text;
-          value = financialData[prompt.name];
-          if (promptText) {
-            console.log(`{${prompt.name}}`);
-            promptText = promptText.replace(`{${prompt.name}}`, value);
-          }
-          console.log("Replaced: ", promptText);
+            break;
+          case "equal":
+            if (condition === value) {
+              promptText = prompt.trueText;
+            } else {
+              promptText = prompt.falseText;
+            }
+            break;
+          case "none":
+            promptText = prompt.text;
+            break;
         }
+
+        prompt.names.forEach((name) => {
+          value = financialData[name];
+          if (promptText) {
+            promptText = promptText.replace(`{${name}}`, value);
+          }
+        });
+
         finalPrompt += promptText;
       });
     }

@@ -90,9 +90,9 @@
           "name": "householdIncomeGroup",
           "type": "select",
           "options": [
-            "B40",
-            "M40",
-            "T20"
+            "B40 (RM5,250 and less)",
+            "M40 (Between RM5,251 and RM11,819)",
+            "T20 (RM11,820 or more)"
           ]
         }
       ]
