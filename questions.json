@@ -69,7 +69,7 @@
         },
         {
           "question": "How much is your income range?",
-          "name": "income_range",
+          "name": "incomeRange",
           "options": [
             "0 - 1000",
             "1001 - 2500",
