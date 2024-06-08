@@ -63,7 +63,6 @@ function submitDemographic() {
     demographic: document.getElementById("demographic").value,
   };
 
-  
   // document.getElementById('container').classList.add('container-hidden');
   // console.log("User Demographic: ", response);
   // setTimeout(function() {
@@ -104,10 +103,12 @@ function generateQuestions() {
 
 function generateQuestionsBasedOnSection(sections, seq, length) {
   let part = seq[sections]
+  let form = document.getElementById("financialForm");
+
   questionData.categories.forEach((category) => {
     // let type = seq[sections]
     if (category.questionCategory == part) {
-      // console.log(category.questions);
+      console.log(category.questions);
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
@@ -121,20 +122,21 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
             html = generateRadioQuestion(sections, question);
             break;
         }
-        financialForm.innerHTML += html;
+        console.log(html)
+        form.innerHTML += html;
         if (question.followUp) {
-          generateFollowUpQuestion(sections, question, financialForm);
+          generateFollowUpQuestion(sections, question, form);
         }
       });
     }
   });
-  console.log("Sections: ", part, sections, length-1)
+  // console.log("Sections: ", part, sections, length-1)
   
   if (sections != length-1) {
     // console.log("Sections: ", sections, seq);
-    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
+    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
   } else {
-    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
+    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
   }
 }
 
