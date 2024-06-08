@@ -40,7 +40,10 @@ Output Format & Structure:
 - The suggestions in point forms must be enclosed with <ul> tags
 - The key phrases/points must be enclosed with <b> tags
 - The content of each section must be enclosed with <p> tags.
-- Each section should end with a <br> tag.  `
+- The output must be structured in the following order: Greetings, Spending Analysis, Financial Literacy Check, Personalized Advice, Leveling Up Your Financial Literacy, Conclusion.
+- The output should not use any \n or \r\n characters.
+- The Greetings section should not mention any breakdown of Spending Analysis.
+- The Spending Analysis section must include a breakdown of the user's financial input.
 
 Do's & Don'ts: 
 - Do not assume any user's spending that is not stated.
@@ -59,17 +62,17 @@ Do's & Don'ts:
 - The suggestions must be returned in HTML format, following the tags in the sample output.
 
 Sample Output:
-<h2> Greetings <span style='color:#F6931A'><u>{name}</u></span> !</h2>
+<h2> Greetings </h2>
 <p>Hi {name}, {elaboration based on user's spending behaviour or goal}.</p>
 
 <h3>Spending Analysis</h3>
-<p>Your total monthly expenses come up  to RM{totalExpenses}...</p>
+<p>Your total monthly expenses come up  to RM{totalExpenses}, which is a {gain or exceed} You {analyse spending behaviour}</p>
 
 <h3>Financial Literacy Check</h3>
-<p>Based on your spending habits, you seem to be making {condition} financial decisions.</p>
+<p>Based on your spending habits, you seem to be making <b>{condition}</b> financial decisions.</p>
 
 <h3>Personalized Advice</h3>
-<p>To help you reach your goal ...{elaborate}, here are a few personalized suggestions:
+<p>To help you reach your goal {elaborate here}, here are a few personalized suggestions:
 <ul>
   <li><b>{Suggestion 1}</b>: {Suggestion 1 Elaboration}.</li>
   <li><b>{Suggestion 2}</b>: {Suggestion 2 Elaboration}.</li>
@@ -83,10 +86,10 @@ Sample Output:
   <li><b>{Suggestion 1}</b>: {Suggestion 1 Elaboration}.</li>
   <li><b>{Suggestion 2}</b>: {Suggestion 2 Elaboration}.</li>
   <li><b>{Suggestion 3}</b>: {Suggestion 3 Elaboration}.</li>
-</li>
+</ul>
 </p>
 
-<h2><u>Conclusion</u></h2>
+<h2>Conclusion</h2>
 <p>{name}, you're off to a solid start on your financial journey. By implementing these suggestions and continuing to educate yourself, you'll be well on your way to achieving your goal of saving RM200 each month. Remember, small steps taken consistently lead to significant progress. Keep up the momentum and enjoy the journey towards financial freedom.</p>
 
 ###User Context###
@@ -94,9 +97,19 @@ Sample Output:
 
 $prompt .= $data->userText;
 
+// Get Username
+$name = $data->name;
+
 $response =  $client->geminiPro()->generateContent(
   new TextPart($prompt),
 );
 
-echo $response->text();
+include 'includes/formatOutput.include.php';
+$textContent = $response->text();
+$formattedData = formatOutput($name, $textContent);
+
+$html = stripslashes($formattedData);
+echo json_encode($html, JSON_UNESCAPED_SLASHES);
+
+// echo $response->text();
 ?>

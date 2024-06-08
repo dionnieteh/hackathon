@@ -19,8 +19,8 @@
   </header>
 
   <!--Container-->
-  <div class="col-12 pt-5 d-flex justify-content-center align-items-center" style="min-height:92vh">
-    <div class="p-0 m-0 template" style="width:50%;">
+  <div class="col-12 py-5 d-flex justify-content-center align-items-center" style="min-height:92vh">
+    <div class="p-0 m-0 template" style="width:53%;" id="container">
       <form id="demographicForm" method="POST">
         <div class="d-flex px-5">
           <div class="col-5 pe-2 d-flex flex-column justify-content-center align-items-center">
@@ -55,7 +55,7 @@
       <form id="financialForm" class="row p-4 m-3" method="POST" style="display: none;">
 
       </form>
-      <div id="response" class="row p-4 m-3" method="POST" style="display: none;">
+      <div id="response" class="p-4 m-3 flex-column mb-3" method="POST" style="display: none;">
 
       </div>
     </div>

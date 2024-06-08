@@ -16,3 +16,10 @@ header {
     border-radius: 10px;
 }
 
+.dottedBorder{
+  border-style: dotted;
+  border-color:#F6931A;
+  border-radius:10px;
+}
+
+
