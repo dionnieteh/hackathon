@@ -277,7 +277,7 @@ function classifyPrompt(promptData) {
             }
             break;
           case "equal":
-            if (condition === value) {
+            if (condition == value) {
               promptText = prompt.trueText;
             } else {
               promptText = prompt.falseText;

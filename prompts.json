@@ -30,8 +30,8 @@
           "type": "equal",
           "names": ["financialDependent"],
           "condition": "financialDependent",
-          "conditionValue": "True",
-          "TrueText": "I am financially dependent and would need to rely on my parents for financial support. ",
+          "conditionValue": "Yes",
+          "trueText": "I am financially dependent and would need to rely on my parents for financial support. ",
           "falseText": "I am financially independent and would need to support my own living expenses. "
         },
         {
