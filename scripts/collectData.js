@@ -26,10 +26,10 @@ const quesSection = Object.freeze({
 
 let questionData = {};
 let sections = 0;
+
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     questionData = await fetchQuestion(); // Assign the result of fetchQuestion() to questionData
-    // console.log(questionData);
     generateDemographic(questionData);
   } catch (error) {
     console.error("Error:", error);
@@ -56,7 +56,6 @@ function generateDemographic(questionData) {
   });
 }
 
-
 function submitDemographic() {
   financialData = {
     name: document.getElementById("name").value,
@@ -67,16 +66,14 @@ function submitDemographic() {
   // console.log("User Demographic: ", response);
   // setTimeout(function() {
   // generateQuestions(response);
-  // }, 560); 
+  // }, 560);
 
   console.log("User Demographic: ", financialData);
 
   let demographicForm = document.getElementById("demographicForm");
   demographicForm.style.display = "none";
   generateQuestions();
-
 }
-
 
 let seq = null;
 // Generate question based on demographic
@@ -96,19 +93,19 @@ function generateQuestions() {
   }
   let length = seq.length;
   if (sections < length) {
-    generateQuestionsBasedOnSection(sections, seq ,length);
+    generateQuestionsBasedOnSection(sections, seq, length);
     sections = updateSection(sections);
   }
 }
 
 function generateQuestionsBasedOnSection(sections, seq, length) {
-  let part = seq[sections]
+  let part = seq[sections];
   let form = document.getElementById("financialForm");
 
   questionData.categories.forEach((category) => {
     // let type = seq[sections]
     if (category.questionCategory == part) {
-      console.log(category.questions);
+      // console.log(category.questions);
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
@@ -122,7 +119,7 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
             html = generateRadioQuestion(sections, question);
             break;
         }
-        console.log(html)
+        // console.log(html)
         form.innerHTML += html;
         if (question.followUp) {
           generateFollowUpQuestion(sections, question, form);
@@ -131,8 +128,8 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
     }
   });
   // console.log("Sections: ", part, sections, length-1)
-  
-  if (sections != length-1) {
+
+  if (sections != length - 1) {
     // console.log("Sections: ", sections, seq);
     form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
   } else {
@@ -145,9 +142,9 @@ function updateSection(sections) {
 }
 
 function storeFinancialData(part) {
-  console.log(part)
+  console.log(part);
   questionData.categories.forEach((category) => {
-    if(category.questionCategory == part) {
+    if (category.questionCategory == part) {
       category.questions.forEach((question) => {
         // console.log(question.name);
         let inputElement = document.getElementById(question.name);
@@ -169,14 +166,15 @@ function storeFinancialData(part) {
             }
           });
         }
-        
+
         if (inputElement) {
-          console.log(inputElement.value)
+          // console.log(inputElement.value)
           financialData[question.name] = inputElement.value;
         }
       });
     }
   });
+  console.log(financialData);
   hideQuestions();
 }
 
@@ -190,7 +188,6 @@ function hideQuestions(section) {
     sectionButton[i].style.display = "none";
   }
 }
-
 
 function generateNumberQuestion(sections, question) {
   return `
@@ -293,7 +290,6 @@ function generateFollowUpQuestion(sections, question, financialForm) {
 function submitFinancial() {
   var response = document.getElementById("response");
   let finalPrompt = generatePrompt();
-  console.log("Final Prompt: ", finalPrompt);
 
   fetch("response.php", {
     method: "POST",
@@ -311,8 +307,6 @@ function submitFinancial() {
     });
 }
 
-
-
 function generatePrompt() {
   let finalPrompt = "";
   fetchPrompt()
@@ -323,6 +317,7 @@ function generatePrompt() {
       console.error("Error:", error);
     });
 
+  console.log("Final Prompt: ", finalPrompt);
   return finalPrompt;
 }
 
@@ -336,7 +331,6 @@ function fetchPrompt() {
 }
 
 function classifyPrompt(promptData) {
-
   console.log("Financial Data: ", financialData);
   let finalPrompt = "";
 
