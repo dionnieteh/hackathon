@@ -18,10 +18,10 @@
       <img src="./images/home.png" class="img-fluid" style="max-height:100vh">
     </div>
     <div class="col-6 d-flex align-items-center">
-      <div class="container p-5">
-          <h2 style="color: #50B357">Your AI-powered financial analyst</h2>
-          <h6>Get personalised insights on your spending behaviour and improve your financial literacy.</h6>
-          <a class="btn mt-5 py-2 px-3" href="evaluate.php" role="button" style="background-color: #50B357; color: #ffffff; font-size: 24px;">Get Started</a>
+      <div class="container p-6">
+          <h1>Your <mark class="py-0" style="border-radius:10px; background-color: #F6931A; color: white">AI-powered</mark> financial analyst</h1>
+          <p class="pt-3" style="font-size:1.25rem; ">Get personalised insights on your spending behaviour and improve your financial literacy.</p>
+          <a class="btn mt-5 py-2 px-3" href="evaluate.php" role="button" style="background-color: #036D19; color: #ffffff; font-size: 24px;">Get Started</a>
       </div>
     </div>
   </div>
