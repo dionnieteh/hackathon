@@ -54,7 +54,7 @@
           "names": ["householdIncomeGroup"],
           "condition": null,
           "conditionValue": null,
-          "text": "Lastly, I come from a ${householdIncomeGroup} household. "
+          "text": "Lastly, I come from a {householdIncomeGroup} household. "
         }
 
       ]
@@ -118,7 +118,7 @@
           "names": ["employment"],
           "condition": null,
           "conditionValue": null,
-          "text": "I am an Adult who is currently ${employment}. "
+          "text": "I am an Adult who is currently {employment}. "
         },
         {
           "type": "equal",
@@ -133,14 +133,14 @@
           "names": ["industry"],
           "condition": null,
           "conditionValue": null,
-          "text": "I am currently working in the ${industry} industry. "
+          "text": "I am currently working in the {industry} industry. "
         },
         {
           "type": "none",
           "names": ["income_range"],
           "condition": null,
           "conditionValue": null,
-          "text": "My income ranges from ${income_range}. "
+          "text": "My income ranges from {income_range}. "
         },
         {
           "type": "equal",

@@ -1,8 +1,35 @@
+const quesSection = Object.freeze({
+  students: [
+    "Assets",
+    "Financial Dependency",
+    "Expenditure",
+    "Biggest Expenditure",
+    "Savings",
+    "Household",
+  ],
+  retiree: [
+    "Assets",
+    "EPF",
+    "Expenditure",
+    "Biggest Expenditure",
+    "Savings",
+    "Household",
+  ],
+  adult: [
+    "Employment",
+    "Expenditure",
+    "Biggest Expenditure",
+    "Savings",
+    "Household",
+  ],
+});
+
 let questionData = {};
+let sections = 0;
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     questionData = await fetchQuestion(); // Assign the result of fetchQuestion() to questionData
-    console.log(questionData);
+    // console.log(questionData);
     generateDemographic(questionData);
   } catch (error) {
     console.error("Error:", error);
@@ -29,56 +56,143 @@ function generateDemographic(questionData) {
   });
 }
 
+
 function submitDemographic() {
-  response = {
+  financialData = {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
-  console.log("User Demographic: ", response);
-  generateQuestions(response);
+  console.log("User Demographic: ", financialData);
+
+  let demographicForm = document.getElementById("demographicForm");
+  demographicForm.style.display = "none";
+  generateQuestions();
 }
 
+
+let seq = null;
 // Generate question based on demographic
-function generateQuestions(response) {
+function generateQuestions() {
   let financialForm = document.getElementById("financialForm");
-  financialForm.style.visibility = "visible";
+  financialForm.style.display = "block";
+  switch (financialData.demographic) {
+    case "High School/University Student":
+      seq = quesSection.students;
+      break;
+    case "Retiree":
+      seq = quesSection.retiree;
+      break;
+    case "Adults":
+      seq = quesSection.adult;
+      break;
+  }
+  let length = seq.length;
+  if (sections < length) {
+    generateQuestionsBasedOnSection(sections, seq ,length);
+    sections = updateSection(sections);
+  }
+}
+
+function generateQuestionsBasedOnSection(sections, seq, length) {
+  let part = seq[sections]
   questionData.categories.forEach((category) => {
-    if (category.demographic === response.demographic) {
+    // let type = seq[sections]
+    if (category.questionCategory == part) {
+      // console.log(category.questions);
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
           case "number":
-            html = generateNumberQuestion(question);
+            html = generateNumberQuestion(sections, question);
             break;
           case "select":
-            html = generateSelectQuestion(question);
+            html = generateSelectQuestion(sections, question);
             break;
           case "radio":
-            html = generateRadioQuestion(question);
+            html = generateRadioQuestion(sections, question);
             break;
         }
         financialForm.innerHTML += html;
         if (question.followUp) {
-          generateFollowUpQuestion(question, financialForm);
+          generateFollowUpQuestion(sections, question, financialForm);
         }
       });
     }
   });
-  financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2" onclick="submitFinancial()">Submit</button>`;
+  console.log("Sections: ", part, sections, length-1)
+  
+  if (sections != length-1) {
+    // console.log("Sections: ", sections, seq);
+    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
+  } else {
+    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
+  }
 }
 
-function generateNumberQuestion(question) {
+function updateSection(sections) {
+  return ++sections;
+}
+
+function storeFinancialData(part) {
+  console.log(part)
+  questionData.categories.forEach((category) => {
+    if(category.questionCategory == part) {
+      category.questions.forEach((question) => {
+        // console.log(question.name);
+        let inputElement = document.getElementById(question.name);
+        // console.log(inputElement)
+
+        // Update with follow up value
+        if (question.followUp && inputElement.value === question.followUp.key) {
+          inputElement = document.getElementById(question.followUp.name);
+        } else {
+          inputElement = document.getElementById(question.name);
+        }
+
+        // Get selected radio button
+        if (question.type === "radio") {
+          let radioButtons = document.getElementsByName(question.name);
+          radioButtons.forEach((radioButton) => {
+            if (radioButton.checked) {
+              financialData[question.name] = radioButton.value;
+            }
+          });
+        }
+        
+        if (inputElement) {
+          console.log(inputElement.value)
+          financialData[question.name] = inputElement.value;
+        }
+      });
+    }
+  });
+  hideQuestions();
+}
+
+function hideQuestions(section) {
+  section = document.getElementsByClassName(`section-${sections - 1}`);
+  for (let i = 0; i < section.length; i++) {
+    section[i].style.display = "none";
+  }
+  let sectionButton = document.getElementsByClassName(`btn-next`);
+  for (let i = 0; i < sectionButton.length; i++) {
+    sectionButton[i].style.display = "none";
+  }
+}
+
+
+function generateNumberQuestion(sections, question) {
   return `
-  <div class="form-group my-3">
+  <div class="form-group my-3 section-${sections}" style="visibility:visible;">
     <label for="${question.name}">${question.question}</label>
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
   `;
 }
 
-function generateSelectQuestion(question) {
+function generateSelectQuestion(sections, question) {
   let html = `
-  <div class="form-group my-3">
+  <div class="form-group my-3 section-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
@@ -95,7 +209,7 @@ function generateSelectQuestion(question) {
 
 function generateRadioQuestion(question) {
   let html = `
-  <div class="form-group my-3">
+  <div class="form-group my-3 sections-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
     `;
   let count = 1;
@@ -124,15 +238,15 @@ function generateTextQuestion(question) {
   `;
 }
 
-function generateFollowUpQuestion(question, financialForm) {
+function generateFollowUpQuestion(sections, question, financialForm) {
   let containerID = question.followUp.name + "Container";
   let html = `<div id="${containerID}" style="display:none">`;
   switch (question.followUp.type) {
     case "text":
-      html += generateTextQuestion(question.followUp);
+      html += generateTextQuestion(sections, question.followUp);
       break;
     case "select":
-      html += generateSelectQuestion(question.followUp);
+      html += generateSelectQuestion(sections, question.followUp);
       break;
   }
   html += `</div>`;
@@ -144,7 +258,7 @@ function generateFollowUpQuestion(question, financialForm) {
       if (mutation.type === "childList") {
         let inputElement = document.getElementById(question.name);
         if (inputElement) {
-          console.log(inputElement);
+          // console.log(inputElement);
           let container = document.getElementById(containerID);
           inputElement.addEventListener("input", function () {
             if (inputElement.value === question.followUp.key) {
@@ -167,14 +281,12 @@ function generateFollowUpQuestion(question, financialForm) {
 // Generate and display the final response from the model
 function submitFinancial() {
   var response = document.getElementById("response");
-  getFinancialData();
   let finalPrompt = generatePrompt();
   let model = `
     You're a financial advisor in Malaysia that studies the spending behavior and financial literacy of teenagers in the country. 
     Based on their spending lifestyle, provide personalized advise cater to them and analyze whether their financial literacy is sufficient. 
     Explain to them as if you're explaining to people aging between 12 - 18 years old.
   `;
-  console.log("Submit: ", finalPrompt);
 
   fetch("response.php", {
     method: "POST",
@@ -192,41 +304,7 @@ function submitFinancial() {
     });
 }
 
-function getFinancialData() {
-  let financialData = {
-    name: response.name,
-    demographic: response.demographic,
-  };
-  questionData.categories.forEach((category) => {
-    if (category.demographic === response.demographic) {
-      category.questions.forEach((question) => {
-        let inputElement = document.getElementById(question.name);
 
-        // Update with follow up value
-        if (question.followUp && inputElement.value === question.followUp.key) {
-          inputElement = document.getElementById(question.followUp.name);
-        } else {
-          inputElement = document.getElementById(question.name);
-        }
-
-        // Get selected radio button
-        if (question.type === "radio") {
-          let radioButtons = document.getElementsByName(question.name);
-          radioButtons.forEach((radioButton) => {
-            if (radioButton.checked) {
-              financialData[question.name] = radioButton.value;
-            }
-          });
-        }
-
-        if (inputElement) {
-          financialData[question.name] = inputElement.value;
-        }
-      });
-    }
-  });
-  return financialData;
-}
 
 function generatePrompt() {
   let finalPrompt = "";
@@ -251,8 +329,7 @@ function fetchPrompt() {
 }
 
 function classifyPrompt(promptData) {
-  // Get user input
-  let financialData = getFinancialData();
+
   console.log("Financial Data: ", financialData);
   let finalPrompt = "";
 
