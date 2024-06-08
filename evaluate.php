@@ -35,16 +35,15 @@
         <button type="button" id="button" class="btn mt-5" onclick="submitDemographic()">Next</button>
       </form>
 
-      <form id="financialForm" method="POST" style="display:none;">
+      <form id="financialForm" method="POST" style="display:none">
         <h2>Financial Analysis</h2>
 
       </form>
 
-      <div id="response">
+      <div id="response" >
 
       </div>
     </div>
-  </div>
 </body>
 
 

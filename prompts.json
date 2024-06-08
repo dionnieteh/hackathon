@@ -1,15 +1,15 @@
 {
   "categories": [
     {
-      "categories": "Assets",
+      "category": "Assets",
       "prompts": [
         {
           "type": "greater",
           "names": ["income", "allowance"],
           "condition": "income",
           "conditionValue": 0,
-          "trueText": "I am a {demographic} with a monthly allowance of RM{allowance} and monthly income of RM{income}. ",
-          "falseText": "I am a {demographic} with a monthly allowance of RM{allowance}. "
+          "trueText": "I have a monthly allowance of RM{allowance} and monthly income of RM{income}. ",
+          "falseText": "I have a monthly allowance of RM{allowance}. "
         },
         {
           "type": "greater",
@@ -22,39 +22,41 @@
       ]
     },
     {
-      "categories": "Employment",
+      "category": "Employment",
       "prompts": [
         {
-          "type": "none",
-          "names": ["employment"],
+          "type": "nested-if",
+          "names": ["employment", "industry", "incomeRange"],
           "condition": null,
           "conditionValue": null,
-          "if": { "names": ["Self-Employed"]},
-          "then": {
-            "type": "none",
-            "names": "stableIncome",
-            "condition": "stableIncome",
-            "conditionValue": "True",
-            "trueText": null,
-            "falseText": "I am an {demographic} who is currently {employment} and I do not have a stable income. "
-           },
-          "else": {
-            "text": "I am an {demographic} who is currently {employment}. "
-          }
-        },
-        {
-          "type": "none",
-          "names": ["industry"],
-          "condition": null,
-          "conditionValue": null,
-          "text": "I am currently working in the {industry} industry. " 
-        },
-        {
-          "type": "none",
-          "names": ["incomeRange"],
-          "condition": null,
-          "conditionValue": null,
-          "text": "My income ranges from {incomeRange}. "
+          "cases": [
+            {
+              "condition": "employment",
+              "conditionValue": ["Self-Employed"],
+              "text": null,
+              "isNested": true,
+              "innerIf": [
+                {
+                  "name": ["stableIncome"],
+                  "condition": "stableIncome",
+                  "conditionValue": "Yes",
+                  "trueText": "I’m {employment} in the {industry} field with a stable monthly income of RM{incomeRange}.",
+                  "falseText": " I’m  {employment} in the {industry} field with an approximate monthly income of RM{incomeRange}. As I am self-employed, my income is not stable and depends on my business."
+                }
+              ]
+            },
+            {
+              "condition": "employment",
+              "conditionValue": ["Employed"],
+              "text": "I’m {employment} with a monthly income of RM{incomeRange} and I work in the {industry} field. "
+            },
+            {
+              "condition": "employment",
+              "conditionValue": ["Unemployed"],
+              "text": "I’m {employment}. "
+            }
+            
+          ]
         },
         {
           "type": "greater",
@@ -67,7 +69,7 @@
       ]
     },
     {
-      "categories": "Expenditure",
+      "category": "Expenditure",
       "prompts": [
         {
           "type": "equal",
@@ -88,7 +90,7 @@
       ]
     },
     {
-      "categories": "Biggest Expenditure",
+      "category": "Biggest Expenditure",
       "prompts": [
         {
           "type": "none",
@@ -100,7 +102,7 @@
       ]
     },
     {
-      "categories": "Savings",
+      "category": "Savings",
       "prompts": [
         {
           "type": "none",
