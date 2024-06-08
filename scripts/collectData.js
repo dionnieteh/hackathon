@@ -1,8 +1,15 @@
+const quesSection = Object.freeze({
+  "students": ["Assets", "Financial Dependency", "Expenditure", "Biggest Expenditure", "Savings", "Household"],
+  "retiree": ["Assets", "EPF", "Expenditure", "Biggest Expenditure", "Savings", "Household"],
+  "adult": ["Employment", "Expenditure", "Biggest Expenditure", "Savings", "Household"]
+});
+
 let questionData = {};
+let sections = 0;
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     questionData = await fetchQuestion(); // Assign the result of fetchQuestion() to questionData
-    console.log(questionData);
+    // console.log(questionData);
     generateDemographic(questionData);
   } catch (error) {
     console.error("Error:", error);
@@ -42,13 +49,34 @@ function submitDemographic() {
 function generateQuestions(response) {
   let financialForm = document.getElementById("financialForm");
   financialForm.style.visibility = "visible";
+  let seq;
+  switch (response.demographic) {
+    case "High School/University Student":
+      seq = quesSection.students;
+      break;
+    case "Retiree":
+      seq = quesSection.retiree;
+      break;
+    case "Adult":
+      seq = quesSection.adult;
+      break;
+  }
+
+  if (sections < seq.length) {
+    generateQuestionsBasedOnSection(sections, seq[sections]);
+    sections = updateSection(sections);
+  }
+}
+
+function generateQuestionsBasedOnSection(sections, seq) {
   questionData.categories.forEach((category) => {
-    if (category.demographic === response.demographic) {
+    if (category.questionCategory == seq) {
+      console.log(category.questions)
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
           case "number":
-            html = generateNumberQuestion(question);
+            html = generateNumberQuestion(sections, question);
             break;
           case "select":
             html = generateSelectQuestion(question);
@@ -61,15 +89,25 @@ function generateQuestions(response) {
         if (question.followUp) {
           generateFollowUpQuestion(question, financialForm);
         }
-      });
+      }
+      );
     }
   });
-  financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2" onclick="submitFinancial()">Submit</button>`;
+  financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2" onclick="hideQuestions();generateQuestions(response);submitFinancial();">Next</button>`;
 }
 
-function generateNumberQuestion(question) {
+function updateSection(sections) {
+  return ++sections;
+}
+
+function hideQuestions() {
+  let section = document.getElementsByClassName(`section-${sections}`);
+  section.style.visibility = "hidden";
+}
+
+function generateNumberQuestion(sections, question) {
   return `
-  <div class="form-group my-3">
+  <div class="form-group my-3 section-${sections}" style="visibility:visible;">
     <label for="${question.name}">${question.question}</label>
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
@@ -144,7 +182,7 @@ function generateFollowUpQuestion(question, financialForm) {
       if (mutation.type === "childList") {
         let inputElement = document.getElementById(question.name);
         if (inputElement) {
-          console.log(inputElement);
+          // console.log(inputElement);
           let container = document.getElementById(containerID);
           inputElement.addEventListener("input", function () {
             if (inputElement.value === question.followUp.key) {

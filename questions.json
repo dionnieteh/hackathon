@@ -151,7 +151,7 @@
     },
     {
       "questionCategory": "Household",
-      "questions": {
+      "questions": [{
         "question": "What is your household income group?",
         "name": "householdIncomeGroup",
         "type": "select",
@@ -160,11 +160,11 @@
           "M40 (between RM5,251 and RM11,819)",
           "T20 (RM11,820 or more)"
         ]
-      }
+      }]
     },
     {
       "questionCategory": "Financial Dependency",
-      "questions": {
+      "questions": [{
         "question": "Are you financially dependent?",
         "name": "financialDependent",
         "options": [
@@ -172,16 +172,16 @@
           "No"
         ],
         "type": "select"
-      }
+      }]
     },
     {
       "questionCategory": "EPF",
-      "questions": {
+      "questions": [{
         "question": "How much do you have left in your EPF?",
         "name": "epf",
         "placeholder": "Enter your EPF amount (RM)",
         "type": "number"
-      }
+      }]
     }
   ]
 }
