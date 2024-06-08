@@ -34,7 +34,7 @@ function submitDemographic() {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
-  // console.log(response);
+  console.log("User Demographic: ", response);
   generateQuestions(response);
 }
 
@@ -52,6 +52,9 @@ function generateQuestions(response) {
             break;
           case "select":
             html = generateSelectQuestion(question);
+            break;
+          case "radio":
+            html = generateRadioQuestion(question);
             break;
         }
         financialForm.innerHTML += html;
@@ -87,6 +90,28 @@ function generateSelectQuestion(question) {
     </select>
   </div>
   `;
+  return html;
+}
+
+function generateRadioQuestion(question) {
+  let html = `
+  <div class="form-group my-3">
+    <label for="${question.name}" class="form-label">${question.question}</label>
+    `;
+  let count = 1;
+  question.options.forEach((option) => {
+    id = question.name + count;
+    html += `
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="${question.name}" value="${option}" id="${id}">
+        <label class="form-check-label" for="${id}">
+          ${option}
+        </label>
+      </div>
+    `;
+    count++;
+  });
+  html += `</div>`;
   return html;
 }
 
@@ -139,9 +164,32 @@ function generateFollowUpQuestion(question, financialForm) {
   observer.observe(financialForm, { childList: true, subtree: true });
 }
 
+// Generate and display the final response from the model
 function submitFinancial() {
+  var response = document.getElementById("response");
   getFinancialData();
-  generatePrompt();
+  let finalPrompt = generatePrompt();
+  let model = `
+    You're a financial advisor in Malaysia that studies the spending behavior and financial literacy of teenagers in the country. 
+    Based on their spending lifestyle, provide personalized advise cater to them and analyze whether their financial literacy is sufficient. 
+    Explain to them as if you're explaining to people aging between 12 - 18 years old.
+  `;
+  console.log("Submit: ", finalPrompt);
+
+  fetch("response.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userText: finalPrompt,
+      modelText: model,
+    }),
+  })
+    .then((res) => res.text())
+    .then((res) => {
+      response.innerHTML = res;
+    });
 }
 
 function getFinancialData() {
@@ -153,10 +201,22 @@ function getFinancialData() {
     if (category.demographic === response.demographic) {
       category.questions.forEach((question) => {
         let inputElement = document.getElementById(question.name);
-        if (question.followUp) {
+
+        // Update with follow up value
+        if (question.followUp && inputElement.value === question.followUp.key) {
           inputElement = document.getElementById(question.followUp.name);
         } else {
           inputElement = document.getElementById(question.name);
+        }
+
+        // Get selected radio button
+        if (question.type === "radio") {
+          let radioButtons = document.getElementsByName(question.name);
+          radioButtons.forEach((radioButton) => {
+            if (radioButton.checked) {
+              financialData[question.name] = radioButton.value;
+            }
+          });
         }
 
         if (inputElement) {
@@ -169,13 +229,16 @@ function getFinancialData() {
 }
 
 function generatePrompt() {
+  let finalPrompt = "";
   fetchPrompt()
     .then((promptData) => {
-      let prompt = classifyPrompt(promptData);
+      finalPrompt = classifyPrompt(promptData);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
+
+  return finalPrompt;
 }
 
 function fetchPrompt() {
@@ -190,6 +253,7 @@ function fetchPrompt() {
 function classifyPrompt(promptData) {
   // Get user input
   let financialData = getFinancialData();
+  console.log("Financial Data: ", financialData);
   let finalPrompt = "";
 
   // Filter prompts based on demographic
@@ -198,40 +262,43 @@ function classifyPrompt(promptData) {
       // console.log(category);
       category.prompts.forEach((prompt) => {
         let promptText = "";
-        let value = "";
-        if (prompt.type) {
-          switch (prompt.type) {
-            case "greater":
-              let condition = financialData[prompt.condition];
-              if (condition > prompt.conditionValue) {
-                promptText = prompt.trueText;
-              } else {
-                promptText = prompt.falseText;
-              }
-              break;
-            case "select":
-              break;
-          }
 
-          prompt.names.forEach((name) => {
-            value = financialData[name];
-            if (promptText) {
-              promptText = promptText.replace(`{${name}}`, value);
+        // Identify type of condition to process
+
+        let condition = financialData[prompt.condition];
+        let value = prompt.conditionValue; // To store user dynamic input
+
+        switch (prompt.type) {
+          case "greater":
+            if (condition > value) {
+              promptText = prompt.trueText;
+            } else {
+              promptText = prompt.falseText;
             }
-          });
-
-        } else {
-          promptText = prompt.text;
-          value = financialData[prompt.name];
-          if (promptText) {
-            console.log(`{${prompt.name}}`);
-            promptText = promptText.replace(`{${prompt.name}}`, value);
-          }
-          console.log("Replaced: ", promptText);
+            break;
+          case "equal":
+            if (condition == value) {
+              promptText = prompt.trueText;
+            } else {
+              promptText = prompt.falseText;
+            }
+            break;
+          case "none":
+            promptText = prompt.text;
+            break;
         }
+
+        prompt.names.forEach((name) => {
+          value = financialData[name];
+          if (promptText) {
+            promptText = promptText.replace(`{${name}}`, value);
+          }
+        });
+
         finalPrompt += promptText;
       });
     }
     console.log("Final Prompt: ", finalPrompt);
+    return finalPrompt;
   });
 }
