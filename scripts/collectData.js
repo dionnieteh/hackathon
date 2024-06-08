@@ -65,14 +65,12 @@ function submitDemographic() {
     return;
   }
 
-<<<<<<< Updated upstream
-=======
+
   financialData = {
     name: name,
     demographic: demographic,
   };
 
->>>>>>> Stashed changes
   console.log("User Demographic: ", financialData);
 
   let demographicForm = document.getElementById("demographicForm");
@@ -125,11 +123,11 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
             html += generateRadioQuestion(sections, question);
             break;
         }
-<<<<<<< Updated upstream
+
         // console.log(html)
-=======
+
         form.innerHTML += html;
->>>>>>> Stashed changes
+
         if (question.followUp) {
           generateFollowUpQuestion(sections, question, form);
         }
@@ -150,16 +148,10 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
       <button type="button" id="button" class="btn btn-success" 
   `;
   if (sections != length - 1) {
-<<<<<<< Updated upstream
     // console.log("Sections: ", sections, seq);
     html += `onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next`;
   } else {
     html += `onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit`;
-=======
-    form.innerHTML += `<button type="button" class="btn btn-primary mt-4 btn-next" onclick="handleNext('${part}');" visibility="visible">Next</button>`;
-  } else {
-    form.innerHTML += `<button type="button" class="btn btn-primary mt-4 btn-next" onclick="handleNext('${part}', true);" visibility="visible">Submit</button>`;
->>>>>>> Stashed changes
   }
   html += `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2 bi bi-arrow-right" viewBox="0 0 16 16">
@@ -285,13 +277,9 @@ function handleNext(part, isFinal = false) {
 
 function generateNumberQuestion(sections, question) {
   return `
-<<<<<<< Updated upstream
+
   <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
     <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
-=======
-  <div class="form-group mt-4 section-${sections}" style="visibility:visible;">
-    <label for="${question.name}">${question.question}</label>
->>>>>>> Stashed changes
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
   `;
@@ -299,13 +287,8 @@ function generateNumberQuestion(sections, question) {
 
 function generateSelectQuestion(sections, question) {
   let html = `
-<<<<<<< Updated upstream
-  <div class="form-group  section-${sections}">
-    <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
-=======
   <div class="form-group mt-4 section-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
->>>>>>> Stashed changes
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
   `;
@@ -321,13 +304,8 @@ function generateSelectQuestion(sections, question) {
 
 function generateRadioQuestion(question) {
   let html = `
-<<<<<<< Updated upstream
-  <div class="form-group  sections-${sections}">
-    <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
-=======
   <div class="form-group mt-4 sections-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
->>>>>>> Stashed changes
     `;
   let count = 1;
   question.options.forEach((option) => {
