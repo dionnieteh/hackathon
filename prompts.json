@@ -1,0 +1,22 @@
+{
+  "categories":[
+    {
+      "demographic":"High School/University Student",
+      "prompts":[
+
+        {
+          "type":"greater",
+          "names":["income","allowance"],
+          "condition":"income",
+          "conditionValue":"0",
+          "trueText":"I'm a High School/ University Student with a monthly allowance of RM{allowance} and monthly income of ${income}. ",
+          "falseText":"I'm a High School/ University Student with a monthly allowance of RM{allowance}. "
+        }
+      ]
+      
+    },
+    {
+
+    }
+  ]
+}

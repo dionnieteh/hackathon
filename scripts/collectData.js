@@ -38,7 +38,6 @@ function submitDemographic() {
   generateQuestions(response);
 }
 
-
 // Generate question based on demographic
 function generateQuestions(response) {
   let financialForm = document.getElementById("financialForm");
@@ -46,7 +45,7 @@ function generateQuestions(response) {
   questionData.categories.forEach((category) => {
     if (category.demographic === response.demographic) {
       category.questions.forEach((question) => {
-        let html = ""; 
+        let html = "";
         switch (question.type) {
           case "number":
             html = generateNumberQuestion(question);
@@ -56,7 +55,7 @@ function generateQuestions(response) {
             break;
         }
         financialForm.innerHTML += html;
-        if(question.followUp) {
+        if (question.followUp) {
           generateFollowUpQuestion(question, financialForm);
         }
       });
@@ -115,54 +114,124 @@ function generateFollowUpQuestion(question, financialForm) {
   financialForm.innerHTML += html;
 
   // MutationObserver callback
-  const callback = function(mutationsList, observer) {
+  const callback = function (mutationsList, observer) {
     for (const mutation of mutationsList) {
-      if (mutation.type === 'childList') {
+      if (mutation.type === "childList") {
         let inputElement = document.getElementById(question.name);
         if (inputElement) {
-          console.log(inputElement) ;
+          console.log(inputElement);
           let container = document.getElementById(containerID);
-          inputElement.addEventListener("input", function() {
+          inputElement.addEventListener("input", function () {
             if (inputElement.value === question.followUp.key) {
-              container.style.display = "block"; 
+              container.style.display = "block";
             } else {
               container.style.display = "none";
             }
           });
-          observer.disconnect(); 
+          observer.disconnect();
           break;
         }
       }
     }
   };
 
-
   const observer = new MutationObserver(callback);
   observer.observe(financialForm, { childList: true, subtree: true });
 }
 
-function submitFinancial(){
+function submitFinancial() {
   getFinancialData();
+  generatePrompt();
 }
 
-function getFinancialData(){
-  let financialData = {};
+function getFinancialData() {
+  let financialData = {
+    name: response.name,
+    demographic: response.demographic,
+  };
   questionData.categories.forEach((category) => {
     if (category.demographic === response.demographic) {
       category.questions.forEach((question) => {
-
         let inputElement = document.getElementById(question.name);
-        if(question.followUp) {
+        if (question.followUp) {
           inputElement = document.getElementById(question.followUp.name);
-        }else{
+        } else {
           inputElement = document.getElementById(question.name);
         }
-        
+
         if (inputElement) {
           financialData[question.name] = inputElement.value;
         }
       });
     }
   });
-  console.log(financialData);
+  return financialData;
+}
+
+function generatePrompt() {
+  fetchPrompt()
+    .then((promptData) => {
+      let prompt = classifyPrompt(promptData);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+function fetchPrompt() {
+  return fetch("prompts.json").then((response) => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
+  });
+}
+
+function classifyPrompt(promptData) {
+  // Get user input
+  let financialData = getFinancialData();
+  let finalPrompt = "";
+
+  // Filter prompts based on demographic
+  promptData.categories.forEach((category) => {
+    if (category.demographic === financialData.demographic) {
+      // console.log(category);
+      category.prompts.forEach((prompt) => {
+        let promptText = "";
+        let value = "";
+        if (prompt.type) {
+          switch (prompt.type) {
+            case "greater":
+              let condition = financialData[prompt.condition];
+              if (condition > prompt.conditionValue) {
+                promptText = prompt.trueText;
+              } else {
+                promptText = prompt.falseText;
+              }
+              break;
+            case "select":
+              break;
+          }
+
+          prompt.names.forEach((name) => {
+            value = financialData[name];
+            if (promptText) {
+              promptText = promptText.replace(`{${name}}`, value);
+            }
+          });
+
+        } else {
+          promptText = prompt.text;
+          value = financialData[prompt.name];
+          if (promptText) {
+            console.log(`{${prompt.name}}`);
+            promptText = promptText.replace(`{${prompt.name}}`, value);
+          }
+          console.log("Replaced: ", promptText);
+        }
+        finalPrompt += promptText;
+      });
+    }
+    console.log("Final Prompt: ", finalPrompt);
+  });
 }
