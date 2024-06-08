@@ -40,7 +40,7 @@ Output Format & Structure:
 - The header for each section must be enclosed with <h2> tags.
 - The subheader for each section must be enclosed with <h3> tags.
 - The content of each section must be enclosed with <p> tags.
-- Each section should end with a <br> tag.
+- Each section should end with a <br> tag.  `
 
 - There are total of 6 Section: Greeting, Spending Analysis, Financial Literacy Check, Personalized Advice, Leveling Up Your Financial Literacy
 
