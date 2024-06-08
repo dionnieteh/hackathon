@@ -47,36 +47,23 @@
       </button>
   </nav>
 
-
-  <div class="container">
-    <div class="row" style="margin:30px">
-      <h1 style="color: #70A8C2">Financial Advisor</h1>
+  <h1>Financial Advisor</h1>
+  <br>
+  <form id="demographicForm" method="POST">
+    <h2>Demographic Information</h2>
+    <div class="mb-3">
+      <label for="name" class="form-label">Enter your name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter your name" autocomplete="off">
     </div>
     <div class="row" style="margin:30px">
       <h6>A subheading with a brief description of you, your work, and what you’re all about—no biggie</h6>
     </div>
-    <h2>Demographic Information</h2>
+    <button type="button" class="btn btn-primary" onclick="submitDemographic()">Submit</button>
+  </form>
+  <form id="financialForm" method="POST" style="display:none;">
+    <h2>Financial Analysis</h2>
 
-    
-
-    <form id="demographicForm" method="POST">
-        <div class="container" style="background-color: #E7F4F9; padding: 20px;">
-            <label for="name" class="form-label">Enter your name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter your name" autocomplete="off">
-        </div>
-        <div class="container" style="background-color: #E7F4F9; padding: 20px;">
-            <label for="demographic" class="form-label">What is your demographic?</label>
-            <select class="form-select" id="demographic">
-                <option selected disabled>Choose One</option>
-            </select>
-        </div>
-        <button type="button" class="btn btn-primary" onclick="submitDemographic()">Submit</button>
-    </form>
-    <br><br>
-    <form id="financialForm" method="POST" style="visibility:hidden;">
-        <h2>Financial Analysis</h2>
-    </form>
-    
+  </form>
   <div id="response">
   </div>
   </div>
