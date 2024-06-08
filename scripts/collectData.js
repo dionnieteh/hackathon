@@ -57,7 +57,7 @@ function generateQuestions(response) {
     case "Retiree":
       seq = quesSection.retiree;
       break;
-    case "Adult":
+    case "Adults":
       seq = quesSection.adult;
       break;
   }
@@ -79,21 +79,26 @@ function generateQuestionsBasedOnSection(sections, seq) {
             html = generateNumberQuestion(sections, question);
             break;
           case "select":
-            html = generateSelectQuestion(question);
+            html = generateSelectQuestion(sections, question);
             break;
           case "radio":
-            html = generateRadioQuestion(question);
+            html = generateRadioQuestion(sections, question);
             break;
         }
         financialForm.innerHTML += html;
         if (question.followUp) {
-          generateFollowUpQuestion(question, financialForm);
+          generateFollowUpQuestion(sections, question, financialForm);
         }
       }
       );
     }
   });
-  financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2" onclick="hideQuestions();generateQuestions(response);submitFinancial();">Next</button>`;
+  if (seq == "Household") {
+    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();submitFinancial();" visibility="visible">Submit</button>`;
+  } else {
+      console.log("Sections: ", sections, seq.length  );
+      financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();generateQuestions(response);submitFinancial();" visibility="visible">Next</button>`;
+  }
 }
 
 function updateSection(sections) {
@@ -101,8 +106,14 @@ function updateSection(sections) {
 }
 
 function hideQuestions() {
-  let section = document.getElementsByClassName(`section-${sections}`);
-  section.style.visibility = "hidden";
+  let section = document.getElementsByClassName(`section-${sections - 1}`);
+  for (let i = 0; i < section.length; i++) {
+    section[i].style.display = "none";
+  }
+  let sectionButton = document.getElementsByClassName(`btn-next`);
+  for (let i = 0; i < sectionButton.length; i++) {
+    sectionButton[i].style.display = "none";
+  }
 }
 
 function generateNumberQuestion(sections, question) {
@@ -114,9 +125,9 @@ function generateNumberQuestion(sections, question) {
   `;
 }
 
-function generateSelectQuestion(question) {
+function generateSelectQuestion(sections, question) {
   let html = `
-  <div class="form-group my-3">
+  <div class="form-group my-3 section-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
@@ -133,7 +144,7 @@ function generateSelectQuestion(question) {
 
 function generateRadioQuestion(question) {
   let html = `
-  <div class="form-group my-3">
+  <div class="form-group my-3 sections-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
     `;
   let count = 1;
@@ -162,15 +173,15 @@ function generateTextQuestion(question) {
   `;
 }
 
-function generateFollowUpQuestion(question, financialForm) {
+function generateFollowUpQuestion(sections, question, financialForm) {
   let containerID = question.followUp.name + "Container";
   let html = `<div id="${containerID}" style="display:none">`;
   switch (question.followUp.type) {
     case "text":
-      html += generateTextQuestion(question.followUp);
+      html += generateTextQuestion(sections, question.followUp);
       break;
     case "select":
-      html += generateSelectQuestion(question.followUp);
+      html += generateSelectQuestion(sections, question.followUp);
       break;
   }
   html += `</div>`;
