@@ -374,8 +374,8 @@ function generateFollowUpQuestion(sections, question, financialForm) {
   observer.observe(financialForm, { childList: true, subtree: true });
 }
 
-function submitFinancial() {
-  let finalPrompt = generatePrompt();
+async function submitFinancial() {
+  let finalPrompt = await generatePrompt();  // Wait for generatePrompt to complete
   let modelRole =
     "You're a financial advisor in Malaysia that studies the spending behaviour and financial literacy of " +
     financialData.demographic +
@@ -405,23 +405,22 @@ function submitFinancial() {
       modelText: modelRole,
     }),
   })
-    .then((res) => res.text())
-    .then((res) => {
-      res = res.replace(/```html/g, "").replace(/```/g, "");
-      response.innerHTML = res;
-    });
+  .then((res) => res.text())
+  .then((res) => {
+    res = res.replace(/```html/g, "").replace(/```/g, "");
+    response.innerHTML = res;
+  });
 }
 
-function generatePrompt() {
+async function generatePrompt() {
   let prompt = "";
-  fetchPrompt()
-    .then((promptData) => {
-      prompt = classifyPrompt(promptData);
-      console.log("Final Prompt: ", prompt);
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+  try {
+    const promptData = await fetchPrompt();
+    prompt = classifyPrompt(promptData);
+    console.log("Final Prompt: ", prompt);
+  } catch (error) {
+    console.error("Error:", error);
+  }
   return prompt;
 }
 
