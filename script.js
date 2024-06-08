@@ -1,11 +1,11 @@
 function generateResponse(){
-  var text = document.getElementById("text");
+  // var text = document.getElementById("text");
   var response = document.getElementById("response");
 
-  fetch("response.php",{
+  fetch("stream.php",{
     method:"POST",
     body: JSON.stringify({
-      text: text.value
+      // text: text.value
     }),
   })
   .then((res) => res.text())
