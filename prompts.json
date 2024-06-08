@@ -58,6 +58,137 @@
         }
 
       ]
+    },
+    {
+      "demographic": "Retiree",
+      "prompts": [
+        {
+          "type": "greater",
+          "names": ["investment", "allowanceInvestment"],
+          "condition": "allowanceInvestment",
+          "conditionValue": 0,
+          "trueText": "I am a Retiree and I have investments worth RM{investment} and a monthly allowance and income of RM{allowanceInvestment}. ",
+          "falseText": "I am a Retiree and I do not have any investments. "
+        },
+        {
+          "type": "greater",
+          "names": ["epf"],
+          "condition": "epf",
+          "conditionValue": 0,
+          "trueText": "I also have RM{epf} in my EPF account. ",
+          "falseText": "I do not have any EPF savings. "
+        },
+        {
+          "type": "equal",
+          "names": ["totalSpendAmount", "fixedSpendAmount"],
+          "condition": "fixedExpenses",
+          "conditionValue": "0",
+          "trueText": "Every month I spend a total of around RM{totalSpendAmount}. ",
+          "falseText": "Every month I spend a total of around RM{totalSpendAmount} with RM{fixedSpendAmount} as my fixed monthly mandatory expenses. "
+        },
+        {
+          "type": "none",
+          "names": ["biggestSpend", "biggestSpendAmount"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "Other than that, I usually spend RM{biggestSpendAmount} on {biggestSpend}. "
+        },
+        {
+          "type": "none",
+          "names": ["saveAmount"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "I am aiming to save an amount of RM{saveAmount} each month. "
+        },
+        {
+          "type": "equal",
+          "names": ["travel"],
+          "condition": "travel",
+          "conditionValue": "True",
+          "trueText": "I am saving for travel. ",
+          "falseText": "I am not saving for travel. "
+        }
+      ]
+    },
+    {
+      "demographic": "Adult",
+      "prompts": [
+        {
+          "type": "none",
+          "names": ["employment"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "I am an Adult who is currently ${employment}. "
+        },
+        {
+          "type": "equal",
+          "names": ["stableIncome"],
+          "condition": "stableIncome",
+          "conditionValue": "True",
+          "trueText": "I have a stable income. ",
+          "falseText": "I do not have a stable income. "
+        },
+        {
+          "type": "none",
+          "names": ["industry"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "I am currently working in the ${industry} industry. "
+        },
+        {
+          "type": "none",
+          "names": ["income_range"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "My income ranges from ${income_range}. "
+        },
+        {
+          "type": "equal",
+          "names": ["totalSpendAmount", "fixedSpendAmount"],
+          "condition": "fixedExpenses",
+          "conditionValue": "0",
+          "trueText": "Every month I spend a total of around RM{totalSpendAmount}. ",
+          "falseText": "Every month I spend a total of around RM{totalSpendAmount} with RM{fixedSpendAmount} as my fixed monthly mandatory expenses. "
+        },
+        {
+          "type": "none",
+          "names": ["biggestSpend", "biggestSpendAmount"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "Other than that, I usually spend RM{biggestSpendAmount} on {biggestSpend}. "
+        },
+        {
+          "type": "greater",
+          "names": ["debt"],
+          "condition": "debt",
+          "conditionValue": 0,
+          "trueText": "I also have RM{debt} of debt/loan to pay off. ",
+          "falseText": "I do not have any debts or loans. "
+        },
+        {
+          "type": "greater",
+          "names": ["investment"],
+          "condition": "investment",
+          "conditionValue": 0,
+          "trueText": "I have RM{investment} of investments. ",
+          "falseText": "I do not have any investments. "
+        },
+        {
+          "type": "none",
+          "names": ["saveAmount"],
+          "condition": null,
+          "conditionValue": null,
+          "text": "I am aiming to save an amount of RM{saveAmount} each month. "
+        },
+        {
+          "type": "equal",
+          "names": ["travel"],
+          "condition": "travel",
+          "conditionValue": "True",
+          "trueText": "I am saving up for travel. ",
+          "falseText": "I am not saving up for travel. "
+        }
+      ]
     }
   ]
 }
