@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bootstrap demo</title>
+  <link href="style.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
@@ -12,10 +13,17 @@
   <script src="./scripts/collectData.js"></script>
 </head>
 
-<body class="m-3">
+  <header>
+    <img src="logo.png" class="header-logo" alt="App Logo">
+  </header>
+    
+  <body style="background-image:  linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('bg.png'); background-size: cover; background-position: center center;">
 
-  <h1>Financial Advisor</h1>
+  <div class="container centered-container mt-5" id="container">
+  <div class="form-container">
+    <form id="demographicForm" method="POST">
   <br>
+
   <form id="demographicForm" method="POST">
     <h2>Demographic Information</h2>
     <div class="mb-3">
@@ -35,8 +43,17 @@
 
   </form>
   <div id="response">
-
   </div>
+  </div>
+  
+  <br><br>
+  <form id="financialForm" method="POST" style="position: absolute; top: 0; margin-top: 150px; visibility: hidden;" class="p-5">
+    <h2>Financial Analysis</h2>
+  </form>
+  
+  <div id="response">
+  </div>
+
 </body>
 
 </html>
