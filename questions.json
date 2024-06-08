@@ -31,6 +31,58 @@
       ]
     },
     {
+      "questionCategory": "Employment",
+      "questions":[
+        {
+          "question": "What is your employment status?",
+          "name": "employment",
+          "type": "select",
+          "options": [
+            "Self-Employed",
+            "Employed",
+            "Unemployed"
+          ],
+          "followUp": {
+            "key": "Self-Employed",
+            "name": "stableIncome",
+            "question": "Do you have a stable income?",
+            "options": [
+              "Yes", "No"
+            ],
+            "type": "select"
+            }
+        },
+        {
+          "question": "What industry are you working in?",
+          "name": "industry",
+          "options": [
+            "Health",
+            "Education",
+            "IT & Engineering",
+            "Law",
+            "Art",
+            "Entertainment",
+            "Medicine",
+            "Business"
+          ],
+          "type": "select"
+        },
+        {
+          "question": "How much is your income range?",
+          "name": "income_range",
+          "options": [
+            "0 - 1000",
+            "1001 - 2500",
+            "2501 - 4000",
+            "4001 - 5500",
+            "5501 - 7000",
+            "7001 and above"
+          ],
+          "type": "select"
+        }
+      ]
+    },
+    {
       "questionCategory": "Expenditure",
       "questions": [
         {
@@ -127,7 +179,7 @@
       "questions": {
         "question": "How much do you have left in your EPF?",
         "name": "epf",
-        "placeholder": "Enter your investment worth (RM)",
+        "placeholder": "Enter your EPF amount (RM)",
         "type": "number"
       }
     }
