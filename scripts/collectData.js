@@ -62,12 +62,6 @@ function submitDemographic() {
     demographic: document.getElementById("demographic").value,
   };
 
-  // document.getElementById('container').classList.add('container-hidden');
-  // console.log("User Demographic: ", response);
-  // setTimeout(function() {
-  // generateQuestions(response);
-  // }, 560);
-
   console.log("User Demographic: ", financialData);
 
   let demographicForm = document.getElementById("demographicForm");
@@ -101,26 +95,28 @@ function generateQuestions() {
 function generateQuestionsBasedOnSection(sections, seq, length) {
   let part = seq[sections];
   let form = document.getElementById("financialForm");
+  let html=`        
+  <h4 class="mb-1" style="color:#036D19;">Financial Analysis</h4>
+    <p class="text-muted mb-4" style="font-size:0.9rem" id="subtitle">Fill in the questions below</p>
+  `;
 
   questionData.categories.forEach((category) => {
     // let type = seq[sections]
     if (category.questionCategory == part) {
       // console.log(category.questions);
       category.questions.forEach((question) => {
-        let html = "";
         switch (question.type) {
           case "number":
-            html = generateNumberQuestion(sections, question);
+            html += generateNumberQuestion(sections, question);
             break;
           case "select":
-            html = generateSelectQuestion(sections, question);
+            html += generateSelectQuestion(sections, question);
             break;
           case "radio":
-            html = generateRadioQuestion(sections, question);
+            html += generateRadioQuestion(sections, question);
             break;
         }
         // console.log(html)
-        form.innerHTML += html;
         if (question.followUp) {
           generateFollowUpQuestion(sections, question, form);
         }
@@ -129,12 +125,33 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
   });
   // console.log("Sections: ", part, sections, length-1)
 
+  let percentage = ((sections + 1) / length) * 100;
+  html += `
+  <div class="d-flex justify-content-between align-items-center mt-5">
+    <div class="col-7 d-flex justify-content-start align-items-center">
+      <div class="w-75 progress" role="progressbar" aria-valuenow="${percentage}" aria-valuemin="${percentage}" aria-valuemax="100">
+        <div class="progress-bar" style="width: ${percentage}%; background-color:#14CC60"></div>
+      </div>
+      <p class="mb-0 ms-3">${sections + 1} of ${length}</p>
+    </div>
+    <div class="col-5 d-flex justify-content-end align-items-center">
+      <button type="button" id="button" class="btn btn-success" 
+  `;
   if (sections != length - 1) {
     // console.log("Sections: ", sections, seq);
-    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
+    html += `onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next`;
   } else {
-    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
+    html += `onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit`;
   }
+  html += `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2 bi bi-arrow-right" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  `;
+  form.innerHTML = html;
 }
 
 function updateSection(sections) {
@@ -191,8 +208,8 @@ function hideQuestions(section) {
 
 function generateNumberQuestion(sections, question) {
   return `
-  <div class="form-group my-3 section-${sections}" style="visibility:visible;">
-    <label for="${question.name}">${question.question}</label>
+  <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
+    <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
   `;
@@ -200,8 +217,8 @@ function generateNumberQuestion(sections, question) {
 
 function generateSelectQuestion(sections, question) {
   let html = `
-  <div class="form-group my-3 section-${sections}">
-    <label for="${question.name}" class="form-label">${question.question}</label>
+  <div class="form-group  section-${sections}">
+    <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
   `;
@@ -217,8 +234,8 @@ function generateSelectQuestion(sections, question) {
 
 function generateRadioQuestion(question) {
   let html = `
-  <div class="form-group my-3 sections-${sections}">
-    <label for="${question.name}" class="form-label">${question.question}</label>
+  <div class="form-group  sections-${sections}">
+    <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
     `;
   let count = 1;
   question.options.forEach((option) => {
@@ -241,7 +258,7 @@ function generateTextQuestion(question) {
   return `
   <div class="form-group my-4">
     <label for="${question.name}">${question.question}</label>
-    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
+    <input type="${question.type}" class="form-control pb-1 fw-semibold" id="${question.name}" placeholder="${question.placeholder}">
   </div>
   `;
 }
