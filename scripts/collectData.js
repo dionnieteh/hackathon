@@ -1,7 +1,27 @@
 const quesSection = Object.freeze({
-  "students": ["Assets", "Financial Dependency", "Expenditure", "Biggest Expenditure", "Savings", "Household"],
-  "retiree": ["Assets", "EPF", "Expenditure", "Biggest Expenditure", "Savings", "Household"],
-  "adult": ["Employment", "Expenditure", "Biggest Expenditure", "Savings", "Household"]
+  students: [
+    "Assets",
+    "Financial Dependency",
+    "Expenditure",
+    "Biggest Expenditure",
+    "Savings",
+    "Household",
+  ],
+  retiree: [
+    "Assets",
+    "EPF",
+    "Expenditure",
+    "Biggest Expenditure",
+    "Savings",
+    "Household",
+  ],
+  adult: [
+    "Employment",
+    "Expenditure",
+    "Biggest Expenditure",
+    "Savings",
+    "Household",
+  ],
 });
 
 let questionData = {};
@@ -36,25 +56,35 @@ function generateDemographic(questionData) {
   });
 }
 
+
 function submitDemographic() {
-  response = {
+  financialData = {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
+
   
-  document.getElementById('container').classList.add('container-hidden');
-  console.log("User Demographic: ", response);
-  setTimeout(function() {
-  generateQuestions(response);
-  }, 560); 
+  // document.getElementById('container').classList.add('container-hidden');
+  // console.log("User Demographic: ", response);
+  // setTimeout(function() {
+  // generateQuestions(response);
+  // }, 560); 
+
+  console.log("User Demographic: ", financialData);
+
+  let demographicForm = document.getElementById("demographicForm");
+  demographicForm.style.display = "none";
+  generateQuestions();
+
 }
 
+
+let seq = null;
 // Generate question based on demographic
-function generateQuestions(response) {
+function generateQuestions() {
   let financialForm = document.getElementById("financialForm");
-  financialForm.style.visibility = "visible";
-  let seq;
-  switch (response.demographic) {
+  financialForm.style.display = "block";
+  switch (financialData.demographic) {
     case "High School/University Student":
       seq = quesSection.students;
       break;
@@ -65,17 +95,19 @@ function generateQuestions(response) {
       seq = quesSection.adult;
       break;
   }
-
-  if (sections < seq.length) {
-    generateQuestionsBasedOnSection(sections, seq[sections]);
+  let length = seq.length;
+  if (sections < length) {
+    generateQuestionsBasedOnSection(sections, seq ,length);
     sections = updateSection(sections);
   }
 }
 
-function generateQuestionsBasedOnSection(sections, seq) {
+function generateQuestionsBasedOnSection(sections, seq, length) {
+  let part = seq[sections]
   questionData.categories.forEach((category) => {
-    if (category.questionCategory == seq) {
-      console.log(category.questions)
+    // let type = seq[sections]
+    if (category.questionCategory == part) {
+      // console.log(category.questions);
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
@@ -93,15 +125,16 @@ function generateQuestionsBasedOnSection(sections, seq) {
         if (question.followUp) {
           generateFollowUpQuestion(sections, question, financialForm);
         }
-      }
-      );
+      });
     }
   });
-  if (seq == "Household") {
-    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();submitFinancial();" visibility="visible">Submit</button>`;
+  console.log("Sections: ", part, sections, length-1)
+  
+  if (sections != length-1) {
+    // console.log("Sections: ", sections, seq);
+    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
   } else {
-      console.log("Sections: ", sections, seq.length  );
-      financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="hideQuestions();generateQuestions(response);submitFinancial();" visibility="visible">Next</button>`;
+    financialForm.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
   }
 }
 
@@ -109,8 +142,44 @@ function updateSection(sections) {
   return ++sections;
 }
 
-function hideQuestions() {
-  let section = document.getElementsByClassName(`section-${sections - 1}`);
+function storeFinancialData(part) {
+  console.log(part)
+  questionData.categories.forEach((category) => {
+    if(category.questionCategory == part) {
+      category.questions.forEach((question) => {
+        // console.log(question.name);
+        let inputElement = document.getElementById(question.name);
+        // console.log(inputElement)
+
+        // Update with follow up value
+        if (question.followUp && inputElement.value === question.followUp.key) {
+          inputElement = document.getElementById(question.followUp.name);
+        } else {
+          inputElement = document.getElementById(question.name);
+        }
+
+        // Get selected radio button
+        if (question.type === "radio") {
+          let radioButtons = document.getElementsByName(question.name);
+          radioButtons.forEach((radioButton) => {
+            if (radioButton.checked) {
+              financialData[question.name] = radioButton.value;
+            }
+          });
+        }
+        
+        if (inputElement) {
+          console.log(inputElement.value)
+          financialData[question.name] = inputElement.value;
+        }
+      });
+    }
+  });
+  hideQuestions();
+}
+
+function hideQuestions(section) {
+  section = document.getElementsByClassName(`section-${sections - 1}`);
   for (let i = 0; i < section.length; i++) {
     section[i].style.display = "none";
   }
@@ -119,6 +188,7 @@ function hideQuestions() {
     sectionButton[i].style.display = "none";
   }
 }
+
 
 function generateNumberQuestion(sections, question) {
   return `
@@ -220,14 +290,8 @@ function generateFollowUpQuestion(sections, question, financialForm) {
 // Generate and display the final response from the model
 function submitFinancial() {
   var response = document.getElementById("response");
-  getFinancialData();
   let finalPrompt = generatePrompt();
-  let model = `
-    You're a financial advisor in Malaysia that studies the spending behavior and financial literacy of teenagers in the country. 
-    Based on their spending lifestyle, provide personalized advise cater to them and analyze whether their financial literacy is sufficient. 
-    Explain to them as if you're explaining to people aging between 12 - 18 years old.
-  `;
-  console.log("Submit: ", finalPrompt);
+  console.log("Final Prompt: ", finalPrompt);
 
   fetch("response.php", {
     method: "POST",
@@ -236,7 +300,7 @@ function submitFinancial() {
     },
     body: JSON.stringify({
       userText: finalPrompt,
-      modelText: model,
+      // modelText: model,
     }),
   })
     .then((res) => res.text())
@@ -245,41 +309,7 @@ function submitFinancial() {
     });
 }
 
-function getFinancialData() {
-  let financialData = {
-    name: response.name,
-    demographic: response.demographic,
-  };
-  questionData.categories.forEach((category) => {
-    if (category.demographic === response.demographic) {
-      category.questions.forEach((question) => {
-        let inputElement = document.getElementById(question.name);
 
-        // Update with follow up value
-        if (question.followUp && inputElement.value === question.followUp.key) {
-          inputElement = document.getElementById(question.followUp.name);
-        } else {
-          inputElement = document.getElementById(question.name);
-        }
-
-        // Get selected radio button
-        if (question.type === "radio") {
-          let radioButtons = document.getElementsByName(question.name);
-          radioButtons.forEach((radioButton) => {
-            if (radioButton.checked) {
-              financialData[question.name] = radioButton.value;
-            }
-          });
-        }
-
-        if (inputElement) {
-          financialData[question.name] = inputElement.value;
-        }
-      });
-    }
-  });
-  return financialData;
-}
 
 function generatePrompt() {
   let finalPrompt = "";
@@ -304,8 +334,7 @@ function fetchPrompt() {
 }
 
 function classifyPrompt(promptData) {
-  // Get user input
-  let financialData = getFinancialData();
+
   console.log("Financial Data: ", financialData);
   let finalPrompt = "";
 

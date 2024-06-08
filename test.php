@@ -23,19 +23,26 @@
   <div class="form-container">
     <form id="demographicForm" method="POST">
   <br>
-  <h2 id="category">Demographic Information</h2>
-      <div class="mb-3 mt-5">
-        <label for="name" class="form-label">Enter your name:</label>
-        <input type="text" class="form-control" id="name" placeholder="Name" autocomplete="off">
-      </div>
-      <div class="mb-3">
-        <label for="demographic" class="form-label">What is your demographic?</label>
-        <select class="form-select" id="demographic">
-          <option selected disabled>Choose One</option>
-        </select>
-      </div>
-      <button type="button" id="button" class="btn mt-5" onclick="submitDemographic()">Next</button>
-    </form>
+
+  <form id="demographicForm" method="POST">
+    <h2>Demographic Information</h2>
+    <div class="mb-3">
+      <label for="name" class="form-label">Enter your name:</label>
+      <input type="text" class="form-control" id="name" placeholder="Enter your name" autocomplete="off">
+    </div>
+    <div class="mb-3">
+      <label for="demographic" class="form-label">What is your demographic?</label>
+      <select class="form-select" id="demographic">
+        <option selected disabled>Choose One</option>
+      </select>
+    </div>
+    <button type="button" class="btn btn-primary" onclick="submitDemographic()">Submit</button>
+  </form>
+  <form id="financialForm" method="POST" style="display:none;">
+    <h2>Financial Analysis</h2>
+
+  </form>
+  <div id="response">
   </div>
   </div>
   
