@@ -136,6 +136,8 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
   });
 
   let percentage = ((sections + 1) / length) * 100;
+  let isFinal = (sections == length - 1) ? true : false;
+
   html += `
   <div class="d-flex justify-content-between align-items-center mt-5">
     <div class="col-7 d-flex justify-content-start align-items-center">
@@ -145,15 +147,14 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
       <p class="mb-0 ms-3">${sections + 1} of ${length}</p>
     </div>
     <div class="col-5 d-flex justify-content-end align-items-center">
-      <button type="button" id="button" class="btn btn-success" 
+      <button type="button" id="button" class="btn btn-success onclick="handleNext('${part}', ${isFinal});" visibility="visible">" 
   `;
-  let isFinal = (sections == length - 1) ? true : false;
 
   if (isFinal) {
     // console.log("Sections: ", sections, seq);
-    html += `onclick="handleNext('${part}', ${isFinal});" visibility="visible">Next`;
+    html += `Submit`;
   } else {
-    html += `onclick="handleNext('${part}', ${isFinal}); " visibility="visible">Submit`;
+    html += `Next`;
   }
   html += `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2 bi bi-arrow-right" viewBox="0 0 16 16">
