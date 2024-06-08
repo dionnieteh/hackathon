@@ -41,8 +41,12 @@ function submitDemographic() {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
+  
+  document.getElementById('container').classList.add('container-hidden');
   console.log("User Demographic: ", response);
+  setTimeout(function() {
   generateQuestions(response);
+  }, 560); 
 }
 
 // Generate question based on demographic
