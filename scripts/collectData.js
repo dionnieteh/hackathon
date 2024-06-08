@@ -131,9 +131,36 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
 
   if (sections != length - 1) {
     // console.log("Sections: ", sections, seq);
-    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
+    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="validateInput('${part}');" visibility="visible">Next</button>`;
   } else {
-    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
+    form.innerHTML += `<button type="button" class="btn btn-primary mt-2 btn-next" onclick="validateInput('${part}');storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
+  }
+}
+
+function validateInput(part) {
+  let emptyFields = [];
+  let valid = true;
+  questionData.categories.forEach((category) => {
+    if (category.questionCategory == part) {
+      category.questions.forEach((question) => {
+        let inputElement = document.getElementById(question.name);
+        if (inputElement) {
+          if (inputElement.value === "" || inputElement.value === "Choose One") {
+            emptyFields.push(question.question);
+            valid = false;
+          }
+        }
+      });
+    }
+  });
+
+  if (!valid) {
+    let emptyFieldsMessage = "Please answer the following questions.\n" + emptyFields.join("\n");
+    alert(emptyFieldsMessage);
+    return;
+  }else{
+    storeFinancialData(part);
+    generateQuestions();
   }
 }
 
