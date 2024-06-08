@@ -26,10 +26,10 @@ const quesSection = Object.freeze({
 
 let questionData = {};
 let sections = 0;
+
 document.addEventListener("DOMContentLoaded", async function () {
   try {
     questionData = await fetchQuestion(); // Assign the result of fetchQuestion() to questionData
-    // console.log(questionData);
     generateDemographic(questionData);
   } catch (error) {
     console.error("Error:", error);
@@ -56,7 +56,6 @@ function generateDemographic(questionData) {
   });
 }
 
-
 function submitDemographic() {
   financialData = {
     name: document.getElementById("name").value,
@@ -67,16 +66,14 @@ function submitDemographic() {
   // console.log("User Demographic: ", response);
   // setTimeout(function() {
   // generateQuestions(response);
-  // }, 560); 
+  // }, 560);
 
   console.log("User Demographic: ", financialData);
 
   let demographicForm = document.getElementById("demographicForm");
   demographicForm.style.display = "none";
   generateQuestions();
-
 }
-
 
 let seq = null;
 // Generate question based on demographic
@@ -96,19 +93,19 @@ function generateQuestions() {
   }
   let length = seq.length;
   if (sections < length) {
-    generateQuestionsBasedOnSection(sections, seq ,length);
+    generateQuestionsBasedOnSection(sections, seq, length);
     sections = updateSection(sections);
   }
 }
 
 function generateQuestionsBasedOnSection(sections, seq, length) {
-  let part = seq[sections]
+  let part = seq[sections];
   let form = document.getElementById("financialForm");
 
   questionData.categories.forEach((category) => {
     // let type = seq[sections]
     if (category.questionCategory == part) {
-      console.log(category.questions);
+      // console.log(category.questions);
       category.questions.forEach((question) => {
         let html = "";
         switch (question.type) {
@@ -122,7 +119,7 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
             html = generateRadioQuestion(sections, question);
             break;
         }
-        console.log(html)
+        // console.log(html)
         form.innerHTML += html;
         if (question.followUp) {
           generateFollowUpQuestion(sections, question, form);
@@ -131,8 +128,8 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
     }
   });
   // console.log("Sections: ", part, sections, length-1)
-  
-  if (sections != length-1) {
+
+  if (sections != length - 1) {
     // console.log("Sections: ", sections, seq);
     form.innerHTML += `<button type="button" id="button" class="btn mt-4 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
   } else {
@@ -145,19 +142,19 @@ function updateSection(sections) {
 }
 
 function storeFinancialData(part) {
-  console.log(part)
+  console.log(part);
   questionData.categories.forEach((category) => {
-    if(category.questionCategory == part) {
+    if (category.questionCategory == part) {
       category.questions.forEach((question) => {
         // console.log(question.name);
         let inputElement = document.getElementById(question.name);
         // console.log(inputElement)
 
-        // Update with follow up value
+        // Store follow up value
         if (question.followUp && inputElement.value === question.followUp.key) {
-          inputElement = document.getElementById(question.followUp.name);
-        } else {
-          inputElement = document.getElementById(question.name);
+          financialData[question.followUp.name] = document.getElementById(
+            question.followUp.name
+          ).value;
         }
 
         // Get selected radio button
@@ -169,14 +166,15 @@ function storeFinancialData(part) {
             }
           });
         }
-        
+
         if (inputElement) {
-          console.log(inputElement.value)
+          // console.log(inputElement.value)
           financialData[question.name] = inputElement.value;
         }
       });
     }
   });
+  console.log(financialData);
   hideQuestions();
 }
 
@@ -190,7 +188,6 @@ function hideQuestions(section) {
     sectionButton[i].style.display = "none";
   }
 }
-
 
 function generateNumberQuestion(sections, question) {
   return `
@@ -291,9 +288,27 @@ function generateFollowUpQuestion(sections, question, financialForm) {
 
 // Generate and display the final response from the model
 function submitFinancial() {
-  var response = document.getElementById("response");
   let finalPrompt = generatePrompt();
-  console.log("Final Prompt: ", finalPrompt);
+  let modelRole =
+    "You're a financial advisor in Malaysia that studies the spending behaviour and financial literacy of " +
+    financialData.demographic +
+    " in Malaysia.";
+
+  // Hide the form
+  let financialForm = document.getElementById("financialForm");
+  financialForm.style.display = "none";
+
+  // Display the response
+  var response = document.getElementById("response");
+  response.style.display = "block";
+  response.innerHTML = `
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-4 mb-0">Generating Report...</p>
+  </div>
+  `;
 
   fetch("response.php", {
     method: "POST",
@@ -302,28 +317,27 @@ function submitFinancial() {
     },
     body: JSON.stringify({
       userText: finalPrompt,
-      // modelText: model,
+      modelText: modelRole,
     }),
   })
     .then((res) => res.text())
     .then((res) => {
+      res = res.replace(/```html/g, "").replace(/```/g, "");
       response.innerHTML = res;
     });
 }
 
-
-
 function generatePrompt() {
-  let finalPrompt = "";
+  let prompt = "";
   fetchPrompt()
     .then((promptData) => {
-      finalPrompt = classifyPrompt(promptData);
+      prompt = classifyPrompt(promptData);
+      console.log("Final Prompt: ", prompt);
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-
-  return finalPrompt;
+  return prompt;
 }
 
 function fetchPrompt() {
@@ -336,13 +350,19 @@ function fetchPrompt() {
 }
 
 function classifyPrompt(promptData) {
-
   console.log("Financial Data: ", financialData);
-  let finalPrompt = "";
 
-  // Filter prompts based on demographic
+  let processedPrompt =
+    "My name is " +
+    financialData.name +
+    " and I am a(n) " +
+    financialData.demographic +
+    ". ";
+
+  // Filter prompts based on categories
   promptData.categories.forEach((category) => {
-    if (category.demographic === financialData.demographic) {
+    console.log(seq.includes(category.category));
+    if (seq.includes(category.category)) {
       // console.log(category);
       category.prompts.forEach((prompt) => {
         let promptText = "";
@@ -367,6 +387,25 @@ function classifyPrompt(promptData) {
               promptText = prompt.falseText;
             }
             break;
+          case "nested-if":
+            prompt.cases.forEach((caseData) => {
+              condition = financialData[caseData.condition];
+              if (condition == caseData.conditionValue) {
+                if (caseData.innerIf) {
+                  caseData.innerIf.forEach((innerCaseData) => {
+                    condition = financialData[innerCaseData.condition];
+                    if (condition == innerCaseData.conditionValue) {
+                      promptText = innerCaseData.trueText;
+                    } else {
+                      promptText = innerCaseData.falseText;
+                    }
+                  });
+                } else {
+                  promptText = caseData.text;
+                }
+              }
+            });
+            break;
           case "none":
             promptText = prompt.text;
             break;
@@ -379,10 +418,9 @@ function classifyPrompt(promptData) {
           }
         });
 
-        finalPrompt += promptText;
+        processedPrompt += promptText;
       });
     }
-    console.log("Final Prompt: ", finalPrompt);
-    return finalPrompt;
   });
+  return processedPrompt;
 }

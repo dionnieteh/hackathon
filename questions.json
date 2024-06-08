@@ -11,7 +11,7 @@
       "questionCategory": "Assets",
       "questions": [
         {
-          "question": "How much is your monthly income? (part-time/full-time work, investments)",
+          "question": "How much is your monthly income? (Part-time/Full-time work, Investments)",
           "name": "income",
           "placeholder": "Enter your monthly income (RM)",
           "type": "number"
@@ -92,7 +92,7 @@
           "type": "number"
         },
         {
-          "question": "How much is your fixed monthly expenses? (Dorm rental, Tuition fee, Subscriptions)",
+          "question": "How much is your fixed monthly expenses? (Rent, Utilities, Insurance, etc)",
           "name": "fixedExpenses",
           "placeholder": "Enter your fixed monthly expenses (RM)",
           "type": "number"
@@ -118,8 +118,8 @@
             "Healthcare",
             "Transportation",
             "Loans",
-            "Outdoor entertainment (Karaoke, cinema, cafe hopping, etc.)",
-            "Gaming (Board games, card games, computer games, etc.) ",
+            "Outdoor entertainment",
+            "Gaming ",
             "Hobbies",
             "Sports",
             "Subscriptions and memberships"

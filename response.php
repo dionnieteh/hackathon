@@ -11,17 +11,18 @@ $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 $apiKey = $_ENV['API_KEY'];
 
-$data = json_decode(file_get_contents("php://input"));
-
+$json = file_get_contents('php://input');
+$data = json_decode($json);
+// var_dump($data);
 $client = new Client($apiKey);
 
-$prompt = "
-Role: You're a financial advisor in Malaysia that studies the spending behaviour and financial literacy of teenagers in the country.
+$prompt = $data->modelText;
 
-Command: 
-- Analyse the spending behaviour of user 
-- Evaluate their financial literacy based on their financial behaviour. 
-- Generate advises to educate and elevate their financial literacy. 
+$prompt .= "
+Command:  
+- Analyse the spending behaviour of user  
+- Evaluate their financial literacy based on their financial behaviour.  
+- Generate advises to educate and elevate their financial literacy.  
 
 Topic: Analysis of Spending behaviour and financial literacy of user in Malaysia, with suggestions to improve their financial capabilities. 
 
