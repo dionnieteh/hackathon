@@ -35,6 +35,9 @@
     <h2>Financial Analysis</h2>
   
   </form>
+  <div id="response">
+
+  </div>
 </body>
 
 </html>
