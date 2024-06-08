@@ -134,9 +134,9 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
   
   if (sections != length-1) {
     // console.log("Sections: ", sections, seq);
-    form.innerHTML += `<button type="button" id="button" class="btn mt-2 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
+    form.innerHTML += `<button type="button" id="button" class="btn mt-4 btn-next" onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next</button>`;
   } else {
-    form.innerHTML += `<button type="button" id="button" class="btn mt-2 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
+    form.innerHTML += `<button type="button" id="button" class="btn mt-4 btn-next" onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit</button>`;
   }
 }
 
@@ -194,7 +194,7 @@ function hideQuestions(section) {
 
 function generateNumberQuestion(sections, question) {
   return `
-  <div class="form-group mb-3 mt-4 section-${sections}" style="visibility:visible;">
+  <div class="form-group mt-4 section-${sections}" style="visibility:visible;">
     <label for="${question.name}"  class="form-label">${question.question}</label>
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
@@ -203,7 +203,7 @@ function generateNumberQuestion(sections, question) {
 
 function generateSelectQuestion(sections, question) {
   let html = `
-  <div class="form-group my-3 section-${sections}">
+  <div class="form-group mt-4 section-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
@@ -220,7 +220,7 @@ function generateSelectQuestion(sections, question) {
 
 function generateRadioQuestion(question) {
   let html = `
-  <div class="form-group my-3 sections-${sections}">
+  <div class="form-group mt-4 sections-${sections}">
     <label for="${question.name}" class="form-label">${question.question}</label>
     `;
   let count = 1;
@@ -242,7 +242,7 @@ function generateRadioQuestion(question) {
 
 function generateTextQuestion(question) {
   return `
-  <div class="form-group my-4">
+  <div class="form-group mt-4">
     <label for="${question.name}">${question.question}</label>
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
