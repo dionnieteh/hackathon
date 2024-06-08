@@ -29,17 +29,15 @@ let sections = 0;
 
 document.addEventListener("DOMContentLoaded", async function () {
   try {
-    questionData = await fetchQuestion(); // Assign the result of fetchQuestion() to questionData
+    questionData = await fetchQuestion();
     generateDemographic(questionData);
   } catch (error) {
     console.error("Error:", error);
   }
 });
 
-// Store every upcoming responses
 let response = {};
 
-// Fetch question in JSON file
 async function fetchQuestion() {
   const response = await fetch("questions.json");
   if (!response.ok) {
@@ -49,7 +47,6 @@ async function fetchQuestion() {
 }
 
 function generateDemographic(questionData) {
-  // Get demographic options
   let demographicOptions = document.getElementById("demographic");
   questionData.demographic.options.forEach((option) => {
     demographicOptions.innerHTML += `<option value="${option}">${option}</option>`;
@@ -57,11 +54,25 @@ function generateDemographic(questionData) {
 }
 
 function submitDemographic() {
+  const name = document.getElementById("name").value;
+  const demographic = document.getElementById("demographic").value;
+  if (name === "" || /\d/.test(name) || demographic === "Choose One") {
+    if (name !== "" && /\d/.test(name)) {
+      alert("Name should not contain numbers.");
+    } else {
+      alert("Please fill in all the required fields correctly.");
+    }
+    return;
+  }
+
+<<<<<<< Updated upstream
+=======
   financialData = {
-    name: document.getElementById("name").value,
-    demographic: document.getElementById("demographic").value,
+    name: name,
+    demographic: demographic,
   };
 
+>>>>>>> Stashed changes
   console.log("User Demographic: ", financialData);
 
   let demographicForm = document.getElementById("demographicForm");
@@ -70,7 +81,7 @@ function submitDemographic() {
 }
 
 let seq = null;
-// Generate question based on demographic
+
 function generateQuestions() {
   let financialForm = document.getElementById("financialForm");
   financialForm.style.display = "block";
@@ -101,9 +112,7 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
   `;
 
   questionData.categories.forEach((category) => {
-    // let type = seq[sections]
     if (category.questionCategory == part) {
-      // console.log(category.questions);
       category.questions.forEach((question) => {
         switch (question.type) {
           case "number":
@@ -116,14 +125,17 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
             html += generateRadioQuestion(sections, question);
             break;
         }
+<<<<<<< Updated upstream
         // console.log(html)
+=======
+        form.innerHTML += html;
+>>>>>>> Stashed changes
         if (question.followUp) {
           generateFollowUpQuestion(sections, question, form);
         }
       });
     }
   });
-  // console.log("Sections: ", part, sections, length-1)
 
   let percentage = ((sections + 1) / length) * 100;
   html += `
@@ -138,10 +150,16 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
       <button type="button" id="button" class="btn btn-success" 
   `;
   if (sections != length - 1) {
+<<<<<<< Updated upstream
     // console.log("Sections: ", sections, seq);
     html += `onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next`;
   } else {
     html += `onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit`;
+=======
+    form.innerHTML += `<button type="button" class="btn btn-primary mt-4 btn-next" onclick="handleNext('${part}');" visibility="visible">Next</button>`;
+  } else {
+    form.innerHTML += `<button type="button" class="btn btn-primary mt-4 btn-next" onclick="handleNext('${part}', true);" visibility="visible">Submit</button>`;
+>>>>>>> Stashed changes
   }
   html += `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2 bi bi-arrow-right" viewBox="0 0 16 16">
@@ -159,22 +177,17 @@ function updateSection(sections) {
 }
 
 function storeFinancialData(part) {
-  console.log(part);
   questionData.categories.forEach((category) => {
     if (category.questionCategory == part) {
       category.questions.forEach((question) => {
-        // console.log(question.name);
         let inputElement = document.getElementById(question.name);
-        // console.log(inputElement)
 
-        // Store follow up value
         if (question.followUp && inputElement.value === question.followUp.key) {
           financialData[question.followUp.name] = document.getElementById(
             question.followUp.name
           ).value;
         }
 
-        // Get selected radio button
         if (question.type === "radio") {
           let radioButtons = document.getElementsByName(question.name);
           radioButtons.forEach((radioButton) => {
@@ -185,7 +198,6 @@ function storeFinancialData(part) {
         }
 
         if (inputElement) {
-          // console.log(inputElement.value)
           financialData[question.name] = inputElement.value;
         }
       });
@@ -193,6 +205,60 @@ function storeFinancialData(part) {
   });
   console.log(financialData);
   hideQuestions();
+}
+
+function validateInputs(part) {
+  let isValid = true;
+  let invalidFields = new Set();
+
+  questionData.categories.forEach((category) => {
+    if (category.questionCategory == part) {
+      category.questions.forEach((question) => {
+        let inputElement = document.getElementById(question.name);
+
+        if (inputElement && inputElement.type === "number") {
+          if (inputElement.value === "" || parseFloat(inputElement.value) < 0) {
+            invalidFields.add("Number fields should not be empty or negative.");
+            isValid = false;
+          }
+        }
+
+        if (inputElement && inputElement.type === "text") {
+          if (inputElement.value === "") {
+            invalidFields.add("Text fields should not be empty.");
+            isValid = false;
+          }
+        }
+
+        if (inputElement && inputElement.tagName.toLowerCase() === 'select') {
+          if (inputElement.value === "Choose One") {
+            invalidFields.add("Select fields should not be empty.");
+            isValid = false;
+          }
+        }
+
+        if (question.type === "radio") {
+          let radioButtons = document.getElementsByName(question.name);
+          let radioChecked = false;
+          radioButtons.forEach((radioButton) => {
+            if (radioButton.checked) {
+              radioChecked = true;
+            }
+          });
+          if (!radioChecked) {
+            invalidFields.add("Please select an option for all radio fields.");
+            isValid = false;
+          }
+        }
+      });
+    }
+  });
+
+  if (!isValid) {
+    alert("Please fill in all the required fields correctly.\n" + Array.from(invalidFields).join("\n"));
+  }
+
+  return isValid;
 }
 
 function hideQuestions(section) {
@@ -206,10 +272,26 @@ function hideQuestions(section) {
   }
 }
 
+function handleNext(part, isFinal = false) {
+  if (validateInputs(part)) {
+    storeFinancialData(part);
+    if (!isFinal) {
+      generateQuestions();
+    } else {
+      submitFinancial();
+    }
+  }
+}
+
 function generateNumberQuestion(sections, question) {
   return `
+<<<<<<< Updated upstream
   <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
     <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
+=======
+  <div class="form-group mt-4 section-${sections}" style="visibility:visible;">
+    <label for="${question.name}">${question.question}</label>
+>>>>>>> Stashed changes
     <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}">
   </div>
   `;
@@ -217,8 +299,13 @@ function generateNumberQuestion(sections, question) {
 
 function generateSelectQuestion(sections, question) {
   let html = `
+<<<<<<< Updated upstream
   <div class="form-group  section-${sections}">
     <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
+=======
+  <div class="form-group mt-4 section-${sections}">
+    <label for="${question.name}" class="form-label">${question.question}</label>
+>>>>>>> Stashed changes
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
   `;
@@ -234,8 +321,13 @@ function generateSelectQuestion(sections, question) {
 
 function generateRadioQuestion(question) {
   let html = `
+<<<<<<< Updated upstream
   <div class="form-group  sections-${sections}">
     <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
+=======
+  <div class="form-group mt-4 sections-${sections}">
+    <label for="${question.name}" class="form-label">${question.question}</label>
+>>>>>>> Stashed changes
     `;
   let count = 1;
   question.options.forEach((option) => {
@@ -256,7 +348,7 @@ function generateRadioQuestion(question) {
 
 function generateTextQuestion(question) {
   return `
-  <div class="form-group my-4">
+  <div class="form-group mt-4">
     <label for="${question.name}">${question.question}</label>
     <input type="${question.type}" class="form-control pb-1 fw-semibold" id="${question.name}" placeholder="${question.placeholder}">
   </div>
@@ -277,13 +369,11 @@ function generateFollowUpQuestion(sections, question, financialForm) {
   html += `</div>`;
   financialForm.innerHTML += html;
 
-  // MutationObserver callback
   const callback = function (mutationsList, observer) {
     for (const mutation of mutationsList) {
       if (mutation.type === "childList") {
         let inputElement = document.getElementById(question.name);
         if (inputElement) {
-          // console.log(inputElement);
           let container = document.getElementById(containerID);
           inputElement.addEventListener("input", function () {
             if (inputElement.value === question.followUp.key) {
@@ -303,7 +393,6 @@ function generateFollowUpQuestion(sections, question, financialForm) {
   observer.observe(financialForm, { childList: true, subtree: true });
 }
 
-// Generate and display the final response from the model
 function submitFinancial() {
   let finalPrompt = generatePrompt();
   let modelRole =
@@ -311,11 +400,9 @@ function submitFinancial() {
     financialData.demographic +
     " in Malaysia.";
 
-  // Hide the form
   let financialForm = document.getElementById("financialForm");
   financialForm.style.display = "none";
 
-  // Display the response
   var response = document.getElementById("response");
   response.style.display = "block";
   response.innerHTML = `
@@ -376,18 +463,13 @@ function classifyPrompt(promptData) {
     financialData.demographic +
     ". ";
 
-  // Filter prompts based on categories
   promptData.categories.forEach((category) => {
-    console.log(seq.includes(category.category));
     if (seq.includes(category.category)) {
-      // console.log(category);
       category.prompts.forEach((prompt) => {
         let promptText = "";
 
-        // Identify type of condition to process
-
         let condition = financialData[prompt.condition];
-        let value = prompt.conditionValue; // To store user dynamic input
+        let value = prompt.conditionValue;
 
         switch (prompt.type) {
           case "greater":
