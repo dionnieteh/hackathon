@@ -287,19 +287,27 @@ function generateNumberQuestion(sections, question) {
   `;
 }
 
-function blockInvalidChars(event) {
-  const allowedKeys = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'];
-  const key = event.key;
-
-  // Allow allowed keys
-  if (allowedKeys.includes(key)) {
-    return true;
-  }
-
-  // Block other keys
-  return false;
+function generateNumberQuestion(sections, question) {
+  return `
+  <div class="col-12 form-group my-3 section-${sections}" style="visibility:visible;">
+    <label for="${question.name}" class="pb-1 fw-semibold">${question.question}</label>
+    <input type="${question.type}" class="form-control" id="${question.name}" placeholder="${question.placeholder}" oninput="validateNumberInput(event)">
+  </div>
+  `;
 }
 
+function validateNumberInput(event) {
+  const allowedChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.'];
+  const inputChar = event.data;
+  
+  // If input is null (e.g., delete or backspace), allow it
+  if (!inputChar) return;
+
+  // If input is not in allowedChars, prevent input
+  if (!allowedChars.includes(inputChar)) {
+    event.preventDefault();
+  }
+}
 
 function generateSelectQuestion(sections, question) {
   let html = `
