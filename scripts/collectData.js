@@ -282,11 +282,7 @@ function generateFollowUpQuestion(sections, question, financialForm) {
 function submitFinancial() {
   var response = document.getElementById("response");
   let finalPrompt = generatePrompt();
-  let model = `
-    You're a financial advisor in Malaysia that studies the spending behavior and financial literacy of teenagers in the country. 
-    Based on their spending lifestyle, provide personalized advise cater to them and analyze whether their financial literacy is sufficient. 
-    Explain to them as if you're explaining to people aging between 12 - 18 years old.
-  `;
+  console.log("Final Prompt: ", finalPrompt);
 
   fetch("response.php", {
     method: "POST",
@@ -295,7 +291,7 @@ function submitFinancial() {
     },
     body: JSON.stringify({
       userText: finalPrompt,
-      modelText: model,
+      // modelText: model,
     }),
   })
     .then((res) => res.text())

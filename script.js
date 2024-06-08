@@ -2,10 +2,10 @@ function generateResponse(){
   // var text = document.getElementById("text");
   var response = document.getElementById("response");
 
-  fetch("stream.php",{
+  fetch("response.php",{
     method:"POST",
     body: JSON.stringify({
-      // text: text.value
+      userText: text.value
     }),
   })
   .then((res) => res.text())
