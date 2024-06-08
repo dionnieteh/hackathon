@@ -71,3 +71,15 @@ input, select {
 #financialForm{
     z-index: 0; 
 }
+
+#homeBtn {
+    background-color: #036D19; 
+    color: #ffffff; 
+    font-size: 24px;
+    max-width: max-content;
+}
+
+#homeBtn:hover {
+    background-color: #14CC60;
+    color: white;
+}

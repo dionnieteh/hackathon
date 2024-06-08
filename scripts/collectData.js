@@ -288,15 +288,19 @@ function generateFollowUpQuestion(sections, question, financialForm) {
 
 // Generate and display the final response from the model
 function submitFinancial() {
+  var response = document.getElementById("response");
+  let financialForm = document.getElementById("financialForm");
+  // Hide the form
+  financialForm.style.display = "none";
+  let analysis = document.getElementById("analysis");
+  analysis.style.display = "block";
+
   let finalPrompt = generatePrompt();
   let modelRole =
     "You're a financial advisor in Malaysia that studies the spending behaviour and financial literacy of " +
     financialData.demographic +
     " in Malaysia.";
 
-  // Hide the form
-  let financialForm = document.getElementById("financialForm");
-  financialForm.style.display = "none";
 
   // Display the response
   var response = document.getElementById("response");

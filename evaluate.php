@@ -39,6 +39,10 @@
         <h2 id="category">Financial Analysis</h2>
 
       </form>
+      <form id="analysis" method="POST" style="display:none;">
+        <h2 id="category" style="color: black">Here's Your <mark class="py-0" style="border-radius:10px; background-color: #F6931A; color: white">Personalized Analysis</mark></h2>
+
+      </form>
 
       <div id="response">
 
