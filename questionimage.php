@@ -53,66 +53,62 @@
         </div>
     </nav>
 
-    <div class="row" style="margin:30px">
-       <h1 style="color: #70A8C2">Questions</h1>
+
+    <div class="container mt-3">
+
+    <div class="row m-2">
+        <h1 style="color: #70A8C2">Questions with Images</h1>
     </div>
-    <div class="row" style="margin:30px">
+    <div class="row m-2">
         <h6>A subheading with a brief description of you, your work, and what you’re all about—no biggie</h6>
     </div>
-
-    <div class="container">
         <div class="row">
-
-            <div class="col-md-12 mt-3">
-                <div class="card" style="width: 100%; background-color: #E7F4F9; border: none;">
-                    <div class="card-body" style="text-align: center">
-                        <h5 class="card-title">Answer</h5>
-                        <p class="card-text">Description of your answer</p>
+            <div class="col-md-6 mt-3">
+                <div class="card" style="width: 100%; border: none;">
+                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWumQ-CwbOVA6UR_fjfA8q3VbMW6T_Pbndfg&s" style="height: 250px; object-fit: cover;">
+                    <div class="card-body ">
+                        <h6 class="card-title">Answer 1</h6>
+                        <p class="card-text">Description of your first question</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12 mt-3">
-                <div class="card" style="width: 100%; background-color: #E7F4F9; border: none;">
-                    <div class="card-body" style="text-align: center">
-                        <h5 class="card-title">Answer</h5>
-                        <p class="card-text">Description of your answer</p>
-                        <input type="hidden" name="" value="">
+            <div class="col-md-6 mt-3">
+                <div class="card" style="width: 100%; border: none;">
+                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWumQ-CwbOVA6UR_fjfA8q3VbMW6T_Pbndfg&s" style="height: 250px; object-fit: cover;">
+                    <div class="card-body ">
+                        <h6 class="card-title">Answer 1</h6>
+                        <p class="card-text">Description of your first question</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12 mt-3">
-                <div class="card" style="width: 100%; background-color: #E7F4F9; border: none;">
-                    <div class="card-body" style="text-align: center">
-                        <h5 class="card-title">Answer</h5>
-                        <p class="card-text">Description of your answer</p>
-                        <input type="hidden" name="" value="">
+            <div class="col-md-6 mt-3">
+                <div class="card" style="width: 100%; border: none;">
+                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWumQ-CwbOVA6UR_fjfA8q3VbMW6T_Pbndfg&s" style="height: 250px; object-fit: cover;">
+                    <div class="card-body ">
+                        <h6 class="card-title">Answer 1</h6>
+                        <p class="card-text">Description of your first question</p>
                     </div>
                 </div>
             </div>
-
-            <div class="col-md-12 mt-3">
-                <div class="card" style="width: 100%; background-color: #E7F4F9; border: none;">
-                    <div class="card-body" style="text-align: center">
-                        <h5 class="card-title">Answer</h5>
-                        <p class="card-text">Description of your answer</p>
-                        <input type="hidden" name="" value="">
+            <div class="col-md-6 mt-3">
+                <div class="card" style="width: 100%; border: none;">
+                    <img class="card-img-top" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWumQ-CwbOVA6UR_fjfA8q3VbMW6T_Pbndfg&s" style="height: 250px; object-fit: cover;">
+                    <div class="card-body ">
+                        <h6 class="card-title">Answer 1</h6>
+                        <p class="card-text">Description of your first question</p>
                     </div>
                 </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="row m-5">
-        <div class="col-md-12 d-flex align-items-center">
-            <div class="progress" style="background-color: #EDE8E3; width: 100%; height: 35px; border-radius: 10px;">
-                <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25"
-                    aria-valuemin="0" aria-valuemax="100">25%</div>
             </div>
         </div>
+
+        <div class="row m-5">
+            <div class="col-md-12 d-flex align-items-center">
+                <div class="progress" style="background-color: #EDE8E3; width: 100%; height: 35px; border-radius: 10px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 25%;" aria-valuenow="25"
+                        aria-valuemin="0" aria-valuemax="100">25%</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-</body>
