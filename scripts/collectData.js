@@ -176,7 +176,7 @@ function submitFinancial() {
   `;
   console.log("Submit: ", finalPrompt);
 
-  fetch("stream.php", {
+  fetch("response.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
