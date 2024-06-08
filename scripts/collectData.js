@@ -147,11 +147,13 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
     <div class="col-5 d-flex justify-content-end align-items-center">
       <button type="button" id="button" class="btn btn-success" 
   `;
-  if (sections != length - 1) {
+  let isFinal = (sections == length - 1) ? true : false;
+
+  if (isFinal) {
     // console.log("Sections: ", sections, seq);
-    html += `onclick="storeFinancialData('${part}');generateQuestions();" visibility="visible">Next`;
+    html += `onclick="handleNext('${part}', ${isFinal});" visibility="visible">Next`;
   } else {
-    html += `onclick="storeFinancialData('${part}');submitFinancial();" visibility="visible">Submit`;
+    html += `onclick="handleNext('${part}', ${isFinal}); " visibility="visible">Submit`;
   }
   html += `
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="ms-2 bi bi-arrow-right" viewBox="0 0 16 16">
@@ -264,7 +266,7 @@ function hideQuestions(section) {
   }
 }
 
-function handleNext(part, isFinal = false) {
+function handleNext(part, isFinal) {
   if (validateInputs(part)) {
     storeFinancialData(part);
     if (!isFinal) {
