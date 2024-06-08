@@ -67,13 +67,14 @@
 
 footer {
     background-color: white;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0); 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Adjusted shadow to be at the bottom */
     position: fixed;
     bottom: 0;
     width: 100%;
     text-align: center;
     padding: 10px 0;
 }
+
 .footer-logo {
     display: block;
     margin: 0 auto;

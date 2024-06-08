@@ -14,10 +14,6 @@
 </head>
 
 
-<header>
-        <img src="logo.png" class="footer-logo" alt="App Logo">
-    </header>
-
     
   <div class="container centered-container">
   <div class="form-container">
@@ -51,6 +47,10 @@
   
   <div id="response">
   </div>
+
+  <footer>
+        <img src="logo.png" class="footer-logo" alt="App Logo">
+    </footer>
 
 </body>
 
