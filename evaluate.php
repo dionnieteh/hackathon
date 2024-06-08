@@ -22,11 +22,11 @@
     <div class="form-container">
       <form id="demographicForm" method="POST">
         <h2 id="category">Demographic Information</h2>
-        <div class="mb-3 mt-4"  >
+        <div class="mt-4"  >
           <label for="name" class="form-label">What should we call you?</label>
           <input type="text" class="form-control" id="name" placeholder="Name" autocomplete="off">
         </div>
-        <div class="mb-3">
+        <div class="mt-4">
           <label for="demographic" class="form-label">What is your demographic?</label>
           <select class="form-select" id="demographic">
             <option selected disabled>Choose One</option>
