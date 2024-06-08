@@ -34,7 +34,7 @@ function submitDemographic() {
     name: document.getElementById("name").value,
     demographic: document.getElementById("demographic").value,
   };
-  console.log("User Demographic: ", response);
+  // console.log(response);
   generateQuestions(response);
 }
 
@@ -52,9 +52,6 @@ function generateQuestions(response) {
             break;
           case "select":
             html = generateSelectQuestion(question);
-            break;
-          case "radio":
-            html = generateRadioQuestion(question);
             break;
         }
         financialForm.innerHTML += html;
@@ -90,28 +87,6 @@ function generateSelectQuestion(question) {
     </select>
   </div>
   `;
-  return html;
-}
-
-function generateRadioQuestion(question) {
-  let html = `
-  <div class="form-group my-3">
-    <label for="${question.name}" class="form-label">${question.question}</label>
-    `;
-  let count = 1;
-  question.options.forEach((option) => {
-    id = question.name + count;
-    html += `
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="${question.name}" value="${option}" id="${id}">
-        <label class="form-check-label" for="${id}">
-          ${option}
-        </label>
-      </div>
-    `;
-    count++;
-  });
-  html += `</div>`;
   return html;
 }
 
@@ -178,22 +153,10 @@ function getFinancialData() {
     if (category.demographic === response.demographic) {
       category.questions.forEach((question) => {
         let inputElement = document.getElementById(question.name);
-
-        // Update with follow up value
-        if (question.followUp && inputElement.value === question.followUp.key) {
+        if (question.followUp) {
           inputElement = document.getElementById(question.followUp.name);
         } else {
           inputElement = document.getElementById(question.name);
-        }
-
-        // Get selected radio button
-        if (question.type === "radio") {
-          let radioButtons = document.getElementsByName(question.name);
-          radioButtons.forEach((radioButton) => {
-            if (radioButton.checked) {
-              financialData[question.name] = radioButton.value;
-            }
-          });
         }
 
         if (inputElement) {
@@ -227,7 +190,6 @@ function fetchPrompt() {
 function classifyPrompt(promptData) {
   // Get user input
   let financialData = getFinancialData();
-  console.log("Financial Data: ", financialData);
   let finalPrompt = "";
 
   // Filter prompts based on demographic
@@ -236,39 +198,37 @@ function classifyPrompt(promptData) {
       // console.log(category);
       category.prompts.forEach((prompt) => {
         let promptText = "";
-
-        // Identify type of condition to process
-
-        let condition = financialData[prompt.condition];
-        let value = prompt.conditionValue; // To store user dynamic input
-
-        switch (prompt.type) {
-          case "greater":
-            if (condition > value) {
-              promptText = prompt.trueText;
-            } else {
-              promptText = prompt.falseText;
-            }
-            break;
-          case "equal":
-            if (condition === value) {
-              promptText = prompt.trueText;
-            } else {
-              promptText = prompt.falseText;
-            }
-            break;
-          case "none":
-            promptText = prompt.text;
-            break;
-        }
-
-        prompt.names.forEach((name) => {
-          value = financialData[name];
-          if (promptText) {
-            promptText = promptText.replace(`{${name}}`, value);
+        let value = "";
+        if (prompt.type) {
+          switch (prompt.type) {
+            case "greater":
+              let condition = financialData[prompt.condition];
+              if (condition > prompt.conditionValue) {
+                promptText = prompt.trueText;
+              } else {
+                promptText = prompt.falseText;
+              }
+              break;
+            case "select":
+              break;
           }
-        });
 
+          prompt.names.forEach((name) => {
+            value = financialData[name];
+            if (promptText) {
+              promptText = promptText.replace(`{${name}}`, value);
+            }
+          });
+
+        } else {
+          promptText = prompt.text;
+          value = financialData[prompt.name];
+          if (promptText) {
+            console.log(`{${prompt.name}}`);
+            promptText = promptText.replace(`{${prompt.name}}`, value);
+          }
+          console.log("Replaced: ", promptText);
+        }
         finalPrompt += promptText;
       });
     }
