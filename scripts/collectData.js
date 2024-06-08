@@ -422,13 +422,14 @@ async function submitFinancial() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      name: financialData.name,
       userText: finalPrompt,
       modelText: modelRole,
     }),
   })
   .then((res) => res.text())
   .then((res) => {
-    res = res.replace(/```html/g, "").replace(/```/g, "");
+    res = res.replace(/```html/g, "").replace(/```/g, "").replace(/"/g, "").replace(/`\n`/g, "").replace(/\n/g, "");
     response.innerHTML = res;
   });
 }
