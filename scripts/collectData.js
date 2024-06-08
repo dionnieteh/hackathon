@@ -147,7 +147,7 @@ function generateQuestionsBasedOnSection(sections, seq, length) {
       <p class="mb-0 ms-3">${sections + 1} of ${length}</p>
     </div>
     <div class="col-5 d-flex justify-content-end align-items-center">
-      <button type="button" id="button" class="btn btn-success onclick="handleNext('${part}', ${isFinal});" visibility="visible">" 
+      <button type="button" id="button" class="btn btn-success onclick="handleNext('${part}', ${isFinal});" visibility="visible"> 
   `;
 
   if (isFinal) {
