@@ -291,7 +291,7 @@ function generateNumberQuestion(sections, question) {
 function generateSelectQuestion(sections, question) {
   let html = `
   <div class="form-group mt-4 section-${sections}">
-    <label for="${question.name}" class="form-label">${question.question}</label>
+    <label for="${question.name}" class="form-label pb-1 fw-semibold">${question.question}</label>
     <select class="form-select" id="${question.name}">
       <option selected disabled>Choose One</option>
   `;
