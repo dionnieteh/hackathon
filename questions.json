@@ -1,0 +1,283 @@
+{
+  "demographic": {
+    "options": [
+      "High School/University Student",
+      "Retiree",
+      "Adults"
+    ]
+  },
+  "categories": [
+    {
+      "demographic": "High School/University Student",
+      "questions": [
+        {
+          "question": "How much is your monthly income? (part-time/full-time work, investments)",
+          "name": "income",
+          "placeholder": "Enter your monthly income (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your monthly allowance?",
+          "name": "allowance",
+          "placeholder": "Enter your monthly allowance (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much do you spend each month?",
+          "name": "monthlyExpenses",
+          "placeholder": "Enter your monthly spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your fixed monthly expenses? (Dorm rental, Tuition fee, Subscriptions)",
+          "name": "fixedExpenses",
+          "placeholder": "Enter your fixed monthly expenses (RM)",
+          "type": "number"
+        },
+        {
+          "question": "What do you spend most on monthly?",
+          "name": "biggestSpend",
+          "type": "select",
+          "options": [
+            "Shopping",
+            "Food",
+            "Hobbies"
+          ],
+          "followUp": {
+            "key": "Hobbies",
+            "name": "biggestSpendHobby",
+            "question": "What hobby do you spend most on?",
+            "options": [
+              "Karaoke",
+              "Going to the Movies",
+              "Cafe Hopping",
+              "Games (Board Game, Card Game, Computer Games)",
+              "Sports",
+              "Other Hobbies"
+            ],
+            "type": "select"
+          }
+        },
+        {
+          "question": "How much do you usually spend on the chosen activity?",
+          "name": "biggestSpendAmount",
+          "placeholder": "Enter your biggest spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "Are you financially dependent?",
+          "name": "financialDependent",
+          "options": [
+            "Yes",
+            "No"
+          ],
+          "type": "radio"
+        },
+        {
+          "question": "How much do you plan on saving each month?",
+          "name": "saveAmount",
+          "placeholder": "Enter your saving amount (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much worth of investments do you have?",
+          "name": "investment",
+          "placeholder": "Enter your investment worth (RM)",
+          "type": "number"
+        },
+        {
+          "question": "What is your household income group?",
+          "name": "householdIncomeGroup",
+          "type": "select",
+          "options": [
+            "B40 (RM5,250 and less)",
+            "M40 (Between RM5,251 and RM11,819)",
+            "T20 (RM11,820 or more)"
+          ]
+        }
+      ]
+    },
+    {
+      "demographic": "Retiree",
+      "questions": [
+        {
+          "question": "How much worth of investments do you have?",
+          "name": "investment",
+          "placeholder": "Enter your investment worth (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your allowance + income (from investments)?",
+          "name": "allowanceInvestment",
+          "placeholder": "Enter your investment worth (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much do you have left in your EPF?",
+          "name": "epf",
+          "placeholder": "Enter your investment worth (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much do you spend each month?",
+          "name": "totalSpendAmount",
+          "placeholder": "Enter your monthly spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your fixed monthly expenses (rent, subscriptions)?",
+          "name": "fixedSpendAmount",
+          "placeholder": "Enter your fixed monthly expenses (RM)",
+          "type": "number"
+        },
+        {
+          "question": "What do you spend most on monthly?",
+          "name": "biggestSpend",
+          "type": "select",
+          "options": [
+            "Healthcare",
+            "Food",
+            "Transportation",
+            "Loans",
+            "Hobbies",
+            "Shopping"
+          ]
+        },
+        {
+          "question": "How much do you usually spend on your biggest spending?",
+          "name": "biggestSpendAmount",
+          "placeholder": "Enter your biggest spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much do you plan on saving each month?",
+          "name": "saveAmount",
+          "placeholder": "Enter your saving amount (RM)",
+          "type": "number"
+        },
+        {
+          "question": "Are you saving to travel?",
+          "name": "travel",
+          "type": "select",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        }
+      ]
+    },
+    {
+      "demographic": "Adults",
+      "questions": [
+        {
+          "question": "What is your employment status?",
+          "name": "employment",
+          "type": "select",
+          "options": [
+            "Self-Employed",
+            "Employed",
+            "Unemployed"
+          ],
+          "followUp": {
+            "key": "Self-Employed",
+            "name": "stableIncome",
+            "question": "Do you have a stable income?",
+            "options": [
+              "Yes", "No"
+            ],
+            "type": "select"
+            }
+        },
+        {
+          "question": "What industry are you working in?",
+          "name": "industry",
+          "options": [
+            "Health",
+            "Education",
+            "IT & Engineering",
+            "Law",
+            "Art",
+            "Entertainment",
+            "Medicine",
+            "Business"
+          ],
+          "type": "select"
+        },
+        {
+          "question": "How much is your income range?",
+          "name": "income_range",
+          "options": [
+            "0 - 1000",
+            "1001 - 2500",
+            "2501 - 4000",
+            "4001 - 5500",
+            "5501 - 7000",
+            "7001 and above"
+          ],
+          "type": "select"
+        },
+        {
+          "question": "How much do you spend each month?",
+          "name": "totalSpendAmount",
+          "placeholder": "Enter your monthly spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much is your fixed monthly expenses (bills, family expenses, monthly insurance, rent, subscriptions)?",
+          "name": "fixedSpendAmount",
+          "placeholder": "Enter your fixed monthly expenses (RM)",
+          "type": "number"
+        },
+        {
+          "question": "What do you spend most on monthly?",
+          "name": "biggestSpend",
+          "type": "select",
+          "options": [
+            "Outdoor Entertainment",
+            "Gaming",
+            "Shopping",
+            "Food",
+            "Sports",
+            "Transportation",
+            "Healthcare",
+            "Subscriptions and Memberships",
+            "Hobbies"
+          ]
+        },
+        {
+          "question": "How much do you usually spend on your biggest spending?",
+          "name": "biggestSpendAmount",
+          "placeholder": "Enter your biggest spending (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much debt/loan do you have?",
+          "name": "debt",
+          "placeholder": "Enter your debt/loan amount (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much worth of investments do you have?",
+          "name": "investment",
+          "placeholder": "Enter your investment worth (RM)",
+          "type": "number"
+        },
+        {
+          "question": "How much do you plan on saving each month?",
+          "name": "saveAmount",
+          "placeholder": "Enter your saving amount (RM)",
+          "type": "number"
+        },
+        {
+          "question": "Are you saving to travel?",
+          "name": "travel",
+          "type": "select",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        }
+    ]
+  }
+]
+}
