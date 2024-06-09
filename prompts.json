@@ -33,17 +33,7 @@
             {
               "condition": "employment",
               "conditionValue": ["Self-Employed"],
-              "text": null,
-              "isNested": true,
-              "innerIf": [
-                {
-                  "name": ["stableIncome"],
-                  "condition": "stableIncome",
-                  "conditionValue": "Yes",
-                  "trueText": "I’m {employment} in the {industry} field with a stable monthly income of RM{incomeRange}.",
-                  "falseText": " I’m  {employment} in the {industry} field with an approximate monthly income of RM{incomeRange}. As I am self-employed, my income is not stable and depends on my business."
-                }
-              ]
+              "text": "I’m {employment} in the {industry} field with an unstable monthly income of RM{incomeRange}."
             },
             {
               "condition": "employment",

@@ -41,16 +41,7 @@
             "Self-Employed",
             "Employed",
             "Unemployed"
-          ],
-          "followUp": {
-            "key": "Self-Employed",
-            "name": "stableIncome",
-            "question": "Do you have a stable income?",
-            "options": [
-              "Yes", "No"
-            ],
-            "type": "select"
-            }
+          ]
         },
         {
           "question": "What industry are you working in?",
