@@ -2,10 +2,8 @@
 
 <div align="center">
   <img src="images/logo.png" style="width:250px;" alt="Logo">
-
-
-<h3 align="center">AI Powered Financial Literacy Tool made by Team Newbiez</h3>
-<h5>ImagineHack 2024 @ Taylor's Universities</h5>
+  <h3 align="center">AI Powered Financial Literacy Tool made by Team Newbiez</h3>
+  <h5>ImagineHack 2024 @ Taylor's Universities</h5>
 </div>
 
 <br>
@@ -18,18 +16,27 @@ We built fili., an AI-powered financial analysis tool that evaluates spending be
 <br>
 
 ## Technology Stack
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0007.jpg" style="width:300px;" alt="Tech Stack">
-
+<div align="center">
+  <img src="images\readme\Team_Newbiez_pages-to-jpg-0007.jpg" style="width:500px;" alt="Tech Stack">
+</div>
 <br>
 
 ## Overview
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0004.jpg" style="width:300px;" alt="Title">
+<div align="center">
+  <img src="images\readme\Team_Newbiez_pages-to-jpg-0004.jpg" style="width:500px;" alt="Title">
+</div>
 <br>
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0010.jpg" style="width:300px;" alt="Feature 1">
+<div align="center">
+  <img src="images\readme\Team_Newbiez_pages-to-jpg-0010.jpg" style="width:500px;" alt="Feature 1">
+</div>
 <br>
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0011.jpg" style="width:300px;" alt="Feature 2">
+<div align="center">
+  <img src="images\readme\Team_Newbiez_pages-to-jpg-0011.jpg" style="width:500px;" alt="Feature 2">
+</div>
 <br>
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0012.jpg" style="width:300px;" alt="Feature 3">
+<div align="center">
+  <img src="images\readme\Team_Newbiez_pages-to-jpg-0012.jpg" style="width:500px;" alt="Feature 3">
+</div>
 <br>
 
 ## Installation
