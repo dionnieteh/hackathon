@@ -1,7 +1,7 @@
 <br>
 
 <div align="center">
-  <img src="images/logo.png" style="width:300px;" alt="Logo">
+  <img src="images/logo.png" style="width:250px;" alt="Logo">
 
 
 <h3 align="center">AI Powered Financial Literacy Tool made by Team Newbiez</h3>
@@ -18,18 +18,18 @@ We built fili., an AI-powered financial analysis tool that evaluates spending be
 <br>
 
 ## Technology Stack
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0007.jpg" alt="Tech Stack">
+<img src="images\readme\Team_Newbiez_pages-to-jpg-0007.jpg" style="width:300px;" alt="Tech Stack">
 
 <br>
 
 ## Overview
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0004.jpg" alt="Title">
+<img src="images\readme\Team_Newbiez_pages-to-jpg-0004.jpg" style="width:300px;" alt="Title">
 <br>
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0010.jpg" alt="Feature 1">
+<img src="images\readme\Team_Newbiez_pages-to-jpg-0010.jpg" style="width:300px;" alt="Feature 1">
 <br>
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0011.jpg" alt="Feature 2">
+<img src="images\readme\Team_Newbiez_pages-to-jpg-0011.jpg" style="width:300px;" alt="Feature 2">
 <br>
-<img src="images\readme\Team_Newbiez_pages-to-jpg-0012.jpg" alt="Feature 3">
+<img src="images\readme\Team_Newbiez_pages-to-jpg-0012.jpg" style="width:300px;" alt="Feature 3">
 <br>
 
 ## Installation
